@@ -3,9 +3,9 @@ project(feup_aed2)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(feup_aed2 src/main.cpp)
+add_executable(feup_aed2 src/main.cpp src/Airport.cpp src/Utils.cpp)
 
-include_directories(feup_aed2 include/)
+include_directories(feup_aed2 /include)
 
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
