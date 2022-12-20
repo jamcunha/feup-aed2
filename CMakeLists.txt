@@ -3,7 +3,7 @@ project(feup_aed2)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(feup_aed2 src/main.cpp src/Airport.cpp src/Utils.cpp src/City.cpp src/Airline.cpp)
+add_executable(feup_aed2 src/main.cpp src/Airport.cpp src/Utils.cpp src/City.cpp src/Airline.cpp src/Flight.cpp)
 
 include_directories(feup_aed2 /include)
 
