@@ -21,6 +21,12 @@ public:
         double latitude,
         double longitude
     );
+
+    std::string getCode() const;
+
+    double getLatitude() const;
+
+    double getLongitude() const;
 };
 
 #endif //FEUP_AED2_AIRPORT_H

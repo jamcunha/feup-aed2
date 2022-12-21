@@ -11,7 +11,11 @@ private:
     Airline airline_;
 
 public:
-    Flight(Airport &source, Airport &target, Airline &airline);
+    Flight(const Airport &source, const Airport &target, const Airline &airline);
+
+    Airport getSource() const;
+    Airport getTarget() const;
+    Airline getAirline() const;
 };
 
 #endif //FEUP_AED2_FLIGHT_H

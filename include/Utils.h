@@ -5,6 +5,7 @@
 #ifndef FEUP_AED2_UTILS_H
 #define FEUP_AED2_UTILS_H
 
+#include "Airport.h"
 #include <cmath>
 
 namespace utils {
@@ -21,6 +22,8 @@ namespace utils {
      * @return Distance between the two points in Kms
      */
     double haversine(double lat1, double lat2, double long1, double long2);
+
+    double haversine(Airport &source, Airport &target);
 }
 
 #endif //FEUP_AED2_UTILS_H

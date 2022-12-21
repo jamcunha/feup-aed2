@@ -14,3 +14,7 @@ double utils::haversine(double lat1, double lat2, double long1, double long2) {
     return earth_rad * c;
 }
 
+double utils::haversine(Airport &source, Airport &target) {
+    return haversine(source.getLatitude(), target.getLatitude(), source.getLongitude(), target.getLongitude());
+}
+
