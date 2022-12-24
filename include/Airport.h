@@ -1,14 +1,14 @@
 #ifndef FEUP_AED2_AIRPORT_H
 #define FEUP_AED2_AIRPORT_H
 
-#include "City.h"
 #include <string>
 
 class Airport {
 private:
     std::string code_;
     std::string name_;
-    City city_;
+    std::string city_;
+    std::string country_;
     
     double latitude_;
     double longitude_;
@@ -17,7 +17,8 @@ public:
     Airport(
         std::string code,
         std::string name,
-        City &city,
+        std::string city,
+        std::string country,
         double latitude,
         double longitude
     );
