@@ -10,12 +10,12 @@
 class Graph {
 private:
     struct Edge {
-        Flight flight; // Destination Node (Flight is a placeholder for the index of the wanted node)
-        double distance; // Distance between nodes (maybe airports)
+        std::string dest; // Destination Node
+        double distance; // Distance between nodes
     };
 
     struct Node {
-        Airport airport; // Airport (for now, still needs to be decided what is in the node)
+        Airport airport; // Airport
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
     };
@@ -33,7 +33,7 @@ public:
     void addNode(std::string airport_code, Airport &airport);
 
     // Add a edge from an airport to another with their distance as the weight
-    void addEdge(Flight &flight);
+    void addEdge(std::string source_airport, std::string target_airport);
 };
 
 #endif //FEUP_AED2_GRAPH_H
