@@ -38,7 +38,7 @@ public:
     // Set all nodes to unvisited
     void setUnvisited();
 
-    // Depth-First Search - O(|V| + |E|)[maybe]
+    // Depth-First Search - O(|V| + |E|)
     void dfs(const std::string &airport_code);
 };
 

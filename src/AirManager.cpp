@@ -13,6 +13,7 @@ AirManager::AirManager() {
     }
 
     this->airports_ = new Graph(num_airports, true);
+    readData();
 }
 
 AirManager::~AirManager() {

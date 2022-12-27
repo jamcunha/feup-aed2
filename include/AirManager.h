@@ -13,10 +13,11 @@ private:
     std::vector<Airline> airlines_;
     std::unordered_set<std::string> cities_;
 
+    void readData();
+
 public:
     AirManager();
     ~AirManager();
-    void readData();
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H
