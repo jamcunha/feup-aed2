@@ -12,6 +12,10 @@ private:
 
 public:
     Airline(std::string code, std::string name, std::string callsign, std::string country);
+
+    std::string getCode() const;
+
+    bool operator==(const Airline &airline) const;
 };
 
 #endif //FEUP_AED2_AIRLINE_H

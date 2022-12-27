@@ -10,3 +10,11 @@ Airline::Airline(
     callsign_(callsign),
     country_(country) {}
 
+std::string Airline::getCode() const {
+    return code_;
+}
+
+bool Airline::operator==(const Airline &airline) const {
+    return code_ == airline.getCode();
+}
+

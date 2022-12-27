@@ -1,6 +1,8 @@
 #include "../include/Graph.h"
 #include "../include/Utils.h"
 
+#include <iostream>
+
 Graph::Graph(int num, bool dir): n(num), has_dir(dir) {}
 
 void Graph::addNode(const std::string &airport_code, const Airport &airport) {
@@ -19,5 +21,24 @@ void Graph::addEdge(const std::string& source_airport, const std::string& target
 
     if(!this->has_dir)
         t_airport->second.adj.push_back({ source_airport, airline, distance });
+}
+
+void Graph::setUnvisited() {
+    for(auto &it: nodes) {
+        it.second.visited = false;
+    }
+}
+
+void Graph::dfs(const std::string &airport_code) {
+    std::cout << nodes[airport_code].airport.getCode() << '\n';
+    nodes[airport_code].visited = true;
+
+    for(const auto &e: nodes[airport_code].adj) {
+        Node& target_node = nodes[e.dest];
+
+        if(!target_node.visited) {
+            dfs(e.dest);
+        }
+    }
 }
 

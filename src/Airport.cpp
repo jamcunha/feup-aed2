@@ -26,3 +26,6 @@ double Airport::getLongitude() const {
     return longitude_;
 }
 
+bool Airport::operator==(const Airport &airport) const {
+    return code_ == airport.getCode();
+}

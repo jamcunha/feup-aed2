@@ -34,6 +34,12 @@ public:
 
     // Add an edge from an airport to another with their distance as the weight
     void addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline);
+
+    // Set all nodes to unvisited
+    void setUnvisited();
+
+    // Depth-First Search - O(|V| + |E|)[maybe]
+    void dfs(const std::string &airport_code);
 };
 
 #endif //FEUP_AED2_GRAPH_H

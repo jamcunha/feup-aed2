@@ -14,6 +14,8 @@ private:
     double longitude_;
 
 public:
+    Airport() {};
+
     Airport(
         std::string code,
         std::string name,
@@ -28,6 +30,8 @@ public:
     double getLatitude() const;
 
     double getLongitude() const;
+
+    bool operator==(const Airport &airport) const;
 };
 
 #endif //FEUP_AED2_AIRPORT_H
