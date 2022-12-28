@@ -40,6 +40,9 @@ public:
 
     // Depth-First Search - O(|V| + |E|)
     void dfs(const std::string &airport_code);
+
+    // Breadth-First Search - O(|V| + |E|)
+    void bfs(const std::string &airport_code);
 };
 
 #endif //FEUP_AED2_GRAPH_H

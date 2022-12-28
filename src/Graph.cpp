@@ -2,6 +2,7 @@
 #include "../include/Utils.h"
 
 #include <iostream>
+#include <queue>
 
 Graph::Graph(int num, bool dir): n(num), has_dir(dir) {}
 
@@ -38,6 +39,28 @@ void Graph::dfs(const std::string &airport_code) {
 
         if(!target_node.visited) {
             dfs(e.dest);
+        }
+    }
+}
+
+void Graph::bfs(const std::string &airport_code) {
+    setUnvisited();
+
+    std::queue<std::string> q; // queue of unvisited nodes
+    q.push(airport_code);
+    nodes[airport_code].visited = true;
+    while(!q.empty()) {
+        std::string u = q.front(); q.pop();
+
+        Node& node = nodes[airport_code];
+        std::cout << node.airport.getCode() << '\n';
+
+        for(const auto &e: node.adj) {
+            std::string w = e.dest;
+            if(!nodes[w].visited) {
+                q.push(w);
+                nodes[w].visited = true;
+            }
         }
     }
 }
