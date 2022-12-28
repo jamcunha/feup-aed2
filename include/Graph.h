@@ -5,6 +5,9 @@
 
 #include <list>
 #include <unordered_map>
+#include <limits>
+
+#define INF std::numeric_limits<double>::max()
 
 class Graph {
 private:
@@ -18,11 +21,15 @@ private:
         Airport airport; // Airport
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
+        double src_distance; // Distance to source node (used to find shortest path to node)
     };
 
     int n; // Graph size
     bool has_dir; // false: undirected; true: directed
     std::unordered_map<std::string, Node> nodes; // A hash table to have O(1) search { airport_code, node }
+
+    // Find shortest path using dijkstra algorithm - O(|E|log(|V|))
+    void shortestPath(const std::string &airport_code);
 
 public:
     // Constructor: nr of nodes and direction (default: undirected)
@@ -43,6 +50,8 @@ public:
 
     // Breadth-First Search - O(|V| + |E|)
     void bfs(const std::string &airport_code);
+
+    double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_GRAPH_H

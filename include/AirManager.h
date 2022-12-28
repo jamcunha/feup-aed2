@@ -18,6 +18,8 @@ private:
 public:
     AirManager();
     ~AirManager();
+
+    double getDistance(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H
