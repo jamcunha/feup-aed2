@@ -105,11 +105,15 @@ void Graph::bfs(const std::string &airport_code) {
 
 double Graph::getShortestPath(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
-    return nodes[target_airport].src_distance;
+    return nodes.at(target_airport).src_distance;
 }
 
 std::list<Airport> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
-    return nodes[target_airport].travel_from_src;
+    return nodes.at(target_airport).travel_from_src;
+}
+
+int Graph::getNumberOfFlights(const std::string &airport_code) const {
+    return nodes.at(airport_code).adj.size();
 }
 

@@ -80,3 +80,8 @@ double AirManager::getDistance(const std::string &source_airport, const std::str
 std::list<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     return airports_->getTraveledAirports(source_airport, target_airport);
 }
+
+int AirManager::getNumberOfFlights(const std::string &airport_code) const {
+    return airports_->getNumberOfFlights(airport_code);
+}
+
