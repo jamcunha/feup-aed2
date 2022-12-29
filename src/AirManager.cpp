@@ -35,7 +35,7 @@ void AirManager::readData() {
         getline(ss, callsign, ',');
         getline(ss, country, '\r');
 
-        airlines_.push_back(Airline(code, name, callsign, country));
+        airlines_.insert(Airline(code, name, callsign, country));
     }
 
     /* add airports to graph */
@@ -77,6 +77,6 @@ double AirManager::getDistance(const std::string &source_airport, const std::str
     return airports_->getShortestPath(source_airport, target_airport);
 }
 
-std::vector<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
-    return airports_->getShortestDist(source_airport, target_airport);
+std::list<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
+    return airports_->getTraveledAirports(source_airport, target_airport);
 }

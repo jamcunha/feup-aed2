@@ -4,13 +4,20 @@
 #include "Graph.h"
 #include "Airline.h"
 
-#include <vector>
+#include <list>
 #include <unordered_set>
 
 class AirManager {
 private:
+    struct hashAirline {
+        size_t operator() (const Airline &airline) const {
+            std::hash<std::string> hash;
+            return hash(airline.getCode());
+        }
+    };
+
     Graph* airports_;
-    std::vector<Airline> airlines_;
+    std::unordered_set<Airline, hashAirline> airlines_;
     std::unordered_set<std::string> cities_;
 
     void readData();
@@ -21,7 +28,7 @@ public:
 
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
-    std::vector<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

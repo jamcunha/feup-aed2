@@ -28,6 +28,8 @@ void Graph::shortestPath(const std::string &airport_code) {
 
         Node& node = nodes[u.first];
         for(auto &e: node.adj) {
+            if(wanted_airlines.size() != 0 && wanted_airlines.find(e.airline) == wanted_airlines.end())
+                continue;
             double alt = node.src_distance + e.distance;
             Node &v = nodes[e.dest];
             if(alt < v.src_distance) {
@@ -43,7 +45,7 @@ void Graph::shortestPath(const std::string &airport_code) {
 }
 
 void Graph::addNode(const std::string &airport_code, const Airport &airport) {
-    nodes.insert({ airport_code, { airport, {}, false, INF, std::vector<Airport>() } });
+    nodes.insert({ airport_code, { airport, {}, false, INF, std::list<Airport>() } });
 }
 
 void Graph::addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline) {
@@ -106,7 +108,7 @@ double Graph::getShortestPath(const std::string &source_airport, const std::stri
     return nodes[target_airport].src_distance;
 }
 
-std::vector<Airport> Graph::getShortestDist(const std::string &source_airport, const std::string &target_airport) {
+std::list<Airport> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].travel_from_src;
 }
