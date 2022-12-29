@@ -4,17 +4,20 @@
 #include <iostream>
 #include <queue>
 
-Graph::Graph(int num, bool dir): n(num), has_dir(dir) {}
+Graph::Graph(bool dir): has_dir(dir) {}
 
 void Graph::shortestPath(const std::string &airport_code) {
     std::priority_queue<std::pair<std::string, double>> q;
 
     nodes[airport_code].src_distance = 0;
+    nodes[airport_code].travel_from_src.clear();
+    nodes[airport_code].travel_from_src.push_back(nodes[airport_code].airport);
 
     setUnvisited();
     for(auto &node: nodes) {
         if(node.first != airport_code) {
             node.second.src_distance = INF;
+            node.second.travel_from_src.clear();
             q.push({node.first, node.second.src_distance});
         }
         q.push({ node.first, node.second.src_distance });
@@ -28,6 +31,10 @@ void Graph::shortestPath(const std::string &airport_code) {
             double alt = node.src_distance + e.distance;
             Node &v = nodes[e.dest];
             if(alt < v.src_distance) {
+                v.travel_from_src.clear();
+                for(Airport &airport: node.travel_from_src)
+                    v.travel_from_src.push_back(airport);
+                v.travel_from_src.push_back(v.airport);
                 v.src_distance = alt;
                 q.push({ e.dest, alt });
             }
@@ -36,7 +43,7 @@ void Graph::shortestPath(const std::string &airport_code) {
 }
 
 void Graph::addNode(const std::string &airport_code, const Airport &airport) {
-    nodes.insert({ airport_code, { airport, {}, false, INF } });
+    nodes.insert({ airport_code, { airport, {}, false, INF, std::vector<Airport>() } });
 }
 
 void Graph::addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline) {
@@ -97,5 +104,10 @@ void Graph::bfs(const std::string &airport_code) {
 double Graph::getShortestPath(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].src_distance;
+}
+
+std::vector<Airport> Graph::getShortestDist(const std::string &source_airport, const std::string &target_airport) {
+    shortestPath(source_airport);
+    return nodes[target_airport].travel_from_src;
 }
 

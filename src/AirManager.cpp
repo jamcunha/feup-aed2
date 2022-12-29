@@ -4,15 +4,7 @@
 #include <sstream>
 
 AirManager::AirManager() {
-
-    std::ifstream airports("../data/airports.csv");
-    int num_airports = -1;
-
-    for(std::string x; getline(airports, x);) {
-        num_airports++;
-    }
-
-    this->airports_ = new Graph(num_airports, true);
+    this->airports_ = new Graph(true);
     readData();
 }
 
@@ -83,4 +75,8 @@ void AirManager::readData() {
 
 double AirManager::getDistance(const std::string &source_airport, const std::string &target_airport) {
     return airports_->getShortestPath(source_airport, target_airport);
+}
+
+std::vector<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
+    return airports_->getShortestDist(source_airport, target_airport);
 }

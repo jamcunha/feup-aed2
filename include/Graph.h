@@ -6,6 +6,7 @@
 #include <list>
 #include <unordered_map>
 #include <limits>
+#include <vector>
 
 #define INF std::numeric_limits<double>::max()
 
@@ -21,20 +22,22 @@ private:
         Airport airport; // Airport
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
-        double src_distance; // Distance to source node (used to find shortest path to node)
+        double src_distance; // Distance to source node (used to find the shortest path to node)
+        std::vector<Airport> travel_from_src; // vector that stores all airports traveler from source to target in order
+        // maybe could just store the code and use a list instead of a vector
     };
 
-    int n; // Graph size
     bool has_dir; // false: undirected; true: directed
     std::unordered_map<std::string, Node> nodes; // A hash table to have O(1) search { airport_code, node }
 
-    // Find shortest path using dijkstra algorithm - O(|E|log(|V|))
+    // Find the shortest path using dijkstra algorithm - O(|E|log(|V|))
+    // maybe make this public and getShortestPath just return the src_distance
     void shortestPath(const std::string &airport_code);
 
 public:
     // Constructor: nr of nodes and direction (default: undirected)
     // num = nr of airports
-    Graph(int num, bool dir = false);
+    Graph(bool dir = false);
 
     // Add a node to the graph using an airport code as key and the airport as value
     void addNode(const std::string &airport_code, const Airport &airport);
@@ -52,6 +55,8 @@ public:
     void bfs(const std::string &airport_code);
 
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
+
+    std::vector<Airport> getShortestDist(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_GRAPH_H
