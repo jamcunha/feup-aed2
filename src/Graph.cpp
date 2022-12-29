@@ -117,3 +117,11 @@ int Graph::getNumberOfFlights(const std::string &airport_code) const {
     return nodes.at(airport_code).adj.size();
 }
 
+std::set<std::string> Graph::getAirlinesFromAirport(const std::string &airport_code) const {
+    std::set<std::string> airlines;
+    for(auto &a: nodes.at(airport_code).adj)
+        airlines.insert(a.airline);
+
+    return airlines;
+}
+

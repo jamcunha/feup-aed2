@@ -35,7 +35,7 @@ void AirManager::readData() {
         getline(ss, callsign, ',');
         getline(ss, country, '\r');
 
-        airlines_.insert(Airline(code, name, callsign, country));
+        airlines_.insert({ code, Airline(code, name, callsign, country) });
     }
 
     /* add airports to graph */
@@ -85,3 +85,12 @@ int AirManager::getNumberOfFlights(const std::string &airport_code) const {
     return airports_->getNumberOfFlights(airport_code);
 }
 
+std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport_code) const {
+    std::set<std::string> airlines_code = airports_->getAirlinesFromAirport(airport_code);
+    std::list<Airline> airlines;
+
+    for(const std::string &it : airlines_code)
+        airlines.push_back(airlines_.find(it)->second);
+
+    return airlines;
+}

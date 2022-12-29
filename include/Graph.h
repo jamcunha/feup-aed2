@@ -4,6 +4,7 @@
 #include "Airport.h"
 
 #include <list>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
 #include <limits>
@@ -23,7 +24,7 @@ private:
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
         double src_distance; // Distance to source node (used to find the shortest path to node)
-        std::list<Airport> travel_from_src; // vector that stores all airports traveler from source to target in order
+        std::list<Airport> travel_from_src; // list that stores all airports traveler from source to target in order
         // maybe could just store the code
     };
 
@@ -61,6 +62,9 @@ public:
 
     // Number of existing flights from an airport
     int getNumberOfFlights(const std::string &airport_code) const;
+
+    // Get all airlines present in an airport
+    std::set<std::string> getAirlinesFromAirport(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_GRAPH_H
