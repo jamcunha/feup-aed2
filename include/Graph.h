@@ -33,12 +33,11 @@ private:
     std::unordered_set<std::string> wanted_airlines; // use if exists preference in airline(s)
 
     // Find the shortest path using dijkstra algorithm - O(|E|log(|V|))
-    // maybe make this public and getShortestPath just return the src_distance
+    // may be used for a extra feature
     void shortestPath(const std::string &airport_code);
 
 public:
     // Constructor: nr of nodes and direction (default: undirected)
-    // num = nr of airports
     Graph(bool dir = false);
 
     // Add a node to the graph using an airport code as key and the airport as value
