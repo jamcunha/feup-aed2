@@ -59,9 +59,13 @@ public:
     // Get a airport
     Airport getAirport(const std::string &airport_code) const;
 
-    double getShortestPath(const std::string &source_airport, const std::string &target_airport);
+    // Get minimum of flights needed to go from a source airport to a target airport
+    int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
     std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+
+    // Get number of kilometers traveled in a straight line from a source airport to a target airport
+    double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
     // Number of existing flights from an airport
     int getNumberOfFlights(const std::string &airport_code) const;
