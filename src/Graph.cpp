@@ -142,13 +142,14 @@ std::set<std::string> Graph::getAirlinesFromAirport(const std::string &airport_c
 }
 
 std::list<Airport> Graph::getAirportsReached(const std::string &source_airport, int k) {
-    shortestPath(source_airport);
+    bfs(source_airport);
 
     std::list<Airport> airports;
     for(const auto &n: nodes) {
         const Node &node = n.second;
-        /* node.travel_from_src includes source airport, so it isn't <=k */
-        if(node.travel_from_src.size() < k)
+        if(node.airport.getCode() == source_airport)
+            continue;
+        if(node.travel_from_src.size() - 1 <= k)
             airports.push_back(node.airport);
     }
 
@@ -156,13 +157,14 @@ std::list<Airport> Graph::getAirportsReached(const std::string &source_airport, 
 }
 
 std::set<std::string> Graph::getCitiesReached(const std::string &source_airport, int k) {
-    shortestPath(source_airport);
+    bfs(source_airport);
 
     std::set<std::string> cities;
     for(const auto &n: nodes) {
         const Node &node = n.second;
-        /* node.travel_from_src includes source airport, so it isn't <=k */
-        if(node.travel_from_src.size() < k)
+        if(node.airport.getCode() == source_airport)
+            continue;
+        if(node.travel_from_src.size() - 1 <= k)
             cities.insert(node.airport.getCity());
     }
 
@@ -170,16 +172,32 @@ std::set<std::string> Graph::getCitiesReached(const std::string &source_airport,
 }
 
 std::set<std::string> Graph::getCountriesReached(const std::string &source_airport, int k) {
-    shortestPath(source_airport);
+    bfs(source_airport);
 
     std::set<std::string> countries;
     for(const auto &n: nodes) {
         const Node &node = n.second;
-        /* node.travel_from_src includes source airport, so it isn't <=k */
-        if(node.travel_from_src.size() < k)
+        if(node.airport.getCode() == source_airport)
+            continue;
+        if(node.travel_from_src.size() - 1 <= k)
             countries.insert(node.airport.getCountry());
     }
 
     return countries;
 }
 
+std::set<std::string> Graph::getArrivalCities(const std::string &airport_code) const {
+    std::set<std::string> cities;
+    for(const Edge &edge: nodes.at(airport_code).adj)
+        cities.insert(nodes.at(edge.dest).airport.getCity());
+
+    return cities;
+}
+
+std::set<std::string> Graph::getArrivalCountries(const std::string &airport_code) const {
+    std::set<std::string> countries;
+    for(const Edge &edge: nodes.at(airport_code).adj)
+        countries.insert(nodes.at(edge.dest).airport.getCountry());
+
+    return countries;
+}

@@ -80,6 +80,12 @@ public:
 
     // Get all countries that can be reached from a source airport in a number k of flights
     std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+
+    // Get cities that can be reached with 1 flight from a source airport
+    std::set<std::string> getArrivalCities(const std::string &airport_code) const;
+
+    // Get countries that can be reached with 1 flight from a source airport
+    std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_GRAPH_H

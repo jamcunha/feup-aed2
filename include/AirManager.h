@@ -5,6 +5,7 @@
 #include "Airline.h"
 
 #include <list>
+#include <set>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -29,6 +30,10 @@ public:
     int getNumberOfFlights(const std::string &airport_code) const;
 
     std::list<Airline> getAirlinesFromAirport(const std::string &airport_code) const;
+
+    std::set<std::string> getArrivalCities(const std::string &airport_code) const;
+
+    std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H
