@@ -24,7 +24,7 @@ private:
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
         double src_distance; // Distance to source node (used to find the shortest path to node)
-        std::list<Airport> travel_from_src; // list that stores all airports traveler from source to target in order
+        std::list<Airport> travel_from_src; // list that stores all airports traveled from source to target in order
         // maybe could just store the code
     };
 
@@ -56,6 +56,9 @@ public:
     // Breadth-First Search - O(|V| + |E|)
     void bfs(const std::string &airport_code);
 
+    // Get a airport
+    Airport getAirport(const std::string &airport_code) const;
+
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
     std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
@@ -65,6 +68,15 @@ public:
 
     // Get all airlines present in an airport
     std::set<std::string> getAirlinesFromAirport(const std::string &airport_code) const;
+
+    // Get all airports that can be reached from a source airport in a number k of flights
+    std::list<Airport> getAirportsReached(const std::string &source_airport, int k);
+
+    // Get all cities that can be reached from a source airport in a number k of flights
+    std::set<std::string> getCitiesReached(const std::string &source_airport, int k);
+
+    // Get all countries that can be reached from a source airport in a number k of flights
+    std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
 };
 
 #endif //FEUP_AED2_GRAPH_H

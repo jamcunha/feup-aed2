@@ -103,6 +103,10 @@ void Graph::bfs(const std::string &airport_code) {
     }
 }
 
+Airport Graph::getAirport(const std::string &airport_code) const {
+    return nodes.at(airport_code).airport;
+}
+
 double Graph::getShortestPath(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes.at(target_airport).src_distance;
@@ -123,5 +127,47 @@ std::set<std::string> Graph::getAirlinesFromAirport(const std::string &airport_c
         airlines.insert(a.airline);
 
     return airlines;
+}
+
+std::list<Airport> Graph::getAirportsReached(const std::string &source_airport, int k) {
+    shortestPath(source_airport);
+
+    std::list<Airport> airports;
+    for(const auto &n: nodes) {
+        const Node &node = n.second;
+        /* node.travel_from_src includes source airport, so it isn't <=k */
+        if(node.travel_from_src.size() < k)
+            airports.push_back(node.airport);
+    }
+
+    return airports;
+}
+
+std::set<std::string> Graph::getCitiesReached(const std::string &source_airport, int k) {
+    shortestPath(source_airport);
+
+    std::set<std::string> cities;
+    for(const auto &n: nodes) {
+        const Node &node = n.second;
+        /* node.travel_from_src includes source airport, so it isn't <=k */
+        if(node.travel_from_src.size() < k)
+            cities.insert(node.airport.getCity());
+    }
+
+    return cities;
+}
+
+std::set<std::string> Graph::getCountriesReached(const std::string &source_airport, int k) {
+    shortestPath(source_airport);
+
+    std::set<std::string> countries;
+    for(const auto &n: nodes) {
+        const Node &node = n.second;
+        /* node.travel_from_src includes source airport, so it isn't <=k */
+        if(node.travel_from_src.size() < k)
+            countries.insert(node.airport.getCountry());
+    }
+
+    return countries;
 }
 
