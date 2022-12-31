@@ -18,6 +18,18 @@ std::string Airport::getCode() const {
     return code_;
 }
 
+std::string Airport::getName() const {
+    return name_;
+}
+
+std::string Airport::getCity() const {
+    return city_;
+}
+
+std::string Airport::getCountry() const {
+    return country_;
+}
+
 double Airport::getLatitude() const {
     return latitude_;
 }
