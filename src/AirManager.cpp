@@ -106,9 +106,9 @@ void AirManager::local_coordenates(){
 void AirManager::local_city(){
     std::string start, end;
     std::cout<<"Insert start's city: \n";
-    getline(std::cin, start);
+    std::cin >> start;
     std::cout<<"Insert end's city: \n";
-    getline(std::cin,end);
+    std::cin >> end;
     std::list<Airport> traveled;
     std::list<std::string> start_airtports = airports_->findAirport_city(start);
     std::list<std::string> end_airports = airports_->findAirport_city(end);
@@ -117,14 +117,14 @@ void AirManager::local_city(){
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirports(i,j);
-            if (temp.size()<traveled.size() || flag)
+            if (temp.size()<traveled.size() || flag) {
                 traveled=temp;
                 flag=false;
+            }
         }
     }
     for (auto i :airports_->getTraveledAirports(start, end)){
         std::cout<<"->"<<i.getCode();
     }
-
-
 }
+

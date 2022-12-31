@@ -61,7 +61,7 @@ public:
 
     std::string findAirport(double latitude, double longitude);
 
-    std::list<std::string> findAirport_city(std::string city);
+    std::list<std::string> findAirport_city(const std::string &city);
 };
 
 #endif //FEUP_AED2_GRAPH_H

@@ -125,11 +125,13 @@ std::string Graph::findAirport(double latitude, double longitude){
     return code;
 }
 
-std::list<std::string> Graph::findAirport_city(std::string city) {
+std::list<std::string> Graph::findAirport_city(const std::string &city) {
     std::list<std::string> airports;
     for (auto node:nodes){
-        if (node.second.airport.getCity()==city)
+        if(node.second.airport.getCity() == city)
             airports.push_back(node.first);
     }
+
+    return airports;
 }
 
