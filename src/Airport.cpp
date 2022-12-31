@@ -26,6 +26,10 @@ double Airport::getLongitude() const {
     return longitude_;
 }
 
+std::string Airport::getCity() const {
+    return city_;
+}
+
 bool Airport::operator==(const Airport &airport) const {
     return code_ == airport.getCode();
 }

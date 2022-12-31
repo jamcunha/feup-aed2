@@ -51,7 +51,6 @@ void Graph::addNode(const std::string &airport_code, const Airport &airport) {
 void Graph::addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline) {
     auto s_airport = nodes.find(source_airport);
     auto t_airport = nodes.find(target_airport);
-
     if(s_airport == nodes.end() || t_airport == nodes.end() || s_airport == t_airport) return;
 
     double distance = utils::haversine(s_airport->second.airport, t_airport->second.airport);
@@ -111,5 +110,26 @@ double Graph::getShortestPath(const std::string &source_airport, const std::stri
 std::list<Airport> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].travel_from_src;
+}
+
+std::string Graph::findAirport(double latitude, double longitude){
+    std::string code;
+    double latitude_min=MAXFLOAT, longitude_min=MAXFLOAT;
+    for (auto node: nodes) {
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<utils::haversine(latitude,latitude_min,longitude,longitude_min)){
+            code = node.second.airport.getCode();
+            latitude_min=node.second.airport.getLatitude();
+            longitude_min=node.second.airport.getLongitude();
+        }
+    }
+    return code;
+}
+
+std::list<std::string> Graph::findAirport_city(std::string city) {
+    std::list<std::string> airports;
+    for (auto node:nodes){
+        if (node.second.airport.getCity()==city)
+            airports.push_back(node.first);
+    }
 }
 

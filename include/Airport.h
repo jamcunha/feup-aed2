@@ -25,6 +25,8 @@ public:
         double longitude
     );
 
+
+    std::string getCity() const;
     std::string getCode() const;
 
     double getLatitude() const;

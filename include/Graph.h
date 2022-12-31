@@ -58,6 +58,10 @@ public:
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
     std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+
+    std::string findAirport(double latitude, double longitude);
+
+    std::list<std::string> findAirport_city(std::string city);
 };
 
 #endif //FEUP_AED2_GRAPH_H

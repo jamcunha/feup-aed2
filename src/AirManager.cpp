@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 AirManager::AirManager() {
     this->airports_ = new Graph(true);
@@ -79,4 +80,51 @@ double AirManager::getDistance(const std::string &source_airport, const std::str
 
 std::list<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     return airports_->getTraveledAirports(source_airport, target_airport);
+
+
+}
+
+void AirManager::local_coordenates(){
+    double start_longitude, start_latitude, end_longitude, end_latitude;
+    std::cout<<"Insert start's longitude: \n";
+    std::cin >> start_longitude;
+    std::cout<<"Insert start's latitude: \n";
+    std::cin >> start_latitude;
+    std::cout<<"Insert end's longitude: \n";
+    std::cin >> end_longitude;
+    std::cout<<"Insert end's latitude: \n";
+    std::cin >> end_latitude;
+    std::string start = airports_->findAirport(start_latitude,start_longitude);
+    std::string end = airports_->findAirport(end_latitude,end_longitude);
+    std::cout<<"Path:\n";
+    for (auto i :airports_->getTraveledAirports(start, end)){
+        std::cout<<"->"<<i.getCode();
+    }
+
+}
+
+void AirManager::local_city(){
+    std::string start, end;
+    std::cout<<"Insert start's city: \n";
+    getline(std::cin, start);
+    std::cout<<"Insert end's city: \n";
+    getline(std::cin,end);
+    std::list<Airport> traveled;
+    std::list<std::string> start_airtports = airports_->findAirport_city(start);
+    std::list<std::string> end_airports = airports_->findAirport_city(end);
+    std::list<Airport> temp;
+    bool flag = true;
+    for (auto i : start_airtports){
+        for (auto j : end_airports){
+            temp = airports_->getTraveledAirports(i,j);
+            if (temp.size()<traveled.size() || flag)
+                traveled=temp;
+                flag=false;
+        }
+    }
+    for (auto i :airports_->getTraveledAirports(start, end)){
+        std::cout<<"->"<<i.getCode();
+    }
+
+
 }
