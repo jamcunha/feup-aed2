@@ -33,6 +33,8 @@ public:
     void local_coordenates();
 
     void local_city();
+
+    void local_coordenates_closest();
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

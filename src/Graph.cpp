@@ -125,6 +125,16 @@ std::string Graph::findAirport(double latitude, double longitude){
     return code;
 }
 
+std::list<std::string> Graph::findAirports(double latitude, double longitude){
+    std::list<std::string> airports ;
+    for (auto node: nodes) {
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100){
+            airports.push_back(node.first);
+        }
+    }
+    return airports;
+}
+
 std::list<std::string> Graph::findAirport_city(const std::string &city) {
     std::list<std::string> airports;
     for (auto node:nodes){
