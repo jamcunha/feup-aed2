@@ -94,7 +94,7 @@ void AirManager::local_coordenates(){
     std::cin >> end_longitude;
     std::cout<<"Insert end's latitude: \n";
     std::cin >> end_latitude;
-    std::list<Airport> traveled;
+    std::list<std::list<Airport>> traveled;
     std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
     std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
     std::list<Airport> temp;
@@ -103,13 +103,17 @@ void AirManager::local_coordenates(){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirports(i,j);
             if (temp.size()<traveled.size() || flag) {
-                traveled=temp;
+                traveled.push_back(temp);
                 flag=false;
             }
         }
     }
+    std::cout<<"Path:\n";
     for (auto i :traveled){
-        std::cout<<"->"<<i.getCode();
+        for (auto j:i){
+            std::cout<<"->"<<j.getCode();
+        }
+        std::cout<<"\n";
     }
 }
 
@@ -121,7 +125,7 @@ void AirManager::local_city(){
     getline(std::cin, start);
     std::cout<<"Insert end's city: \n";
     getline(std::cin, end);
-    std::list<Airport> traveled;
+    std::list<std::list<Airport>> traveled;
     std::list<std::string> start_airtports = airports_->findAirport_city(start);
     std::list<std::string> end_airports = airports_->findAirport_city(end);
     std::list<Airport> temp;
@@ -130,13 +134,17 @@ void AirManager::local_city(){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirports(i,j);
             if (temp.size()<traveled.size() || flag) {
-                traveled=temp;
+                traveled.push_back(temp);
                 flag=false;
             }
         }
     }
+    std::cout<<"Path:\n";
     for (auto i :traveled){
-        std::cout<<"->"<<i.getCode();
+        for (auto j:i){
+            std::cout<<"->"<<j.getCode();
+        }
+        std::cout<<"\n";
     }
 }
 
