@@ -201,3 +201,7 @@ std::set<std::string> Graph::getArrivalCountries(const std::string &airport_code
 
     return countries;
 }
+
+bool Graph::checkIfAirportExists(const std::string &airport_code) const {
+    return nodes.find(airport_code) != nodes.end();
+}

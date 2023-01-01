@@ -21,6 +21,8 @@ public:
     AirManager();
     ~AirManager();
 
+    Airport getAirport(const std::string &airport_code) const;
+
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
@@ -34,6 +36,8 @@ public:
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;
 
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
+
+    bool checkIfAirportExists(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

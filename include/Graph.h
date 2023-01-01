@@ -86,6 +86,9 @@ public:
 
     // Get countries that can be reached with 1 flight from a source airport
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
+
+    // Check if airport exists in nodes hash table
+    bool checkIfAirportExists(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_GRAPH_H

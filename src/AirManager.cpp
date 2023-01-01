@@ -12,6 +12,10 @@ AirManager::~AirManager() {
     delete airports_;
 }
 
+Airport AirManager::getAirport(const std::string &airport_code) const {
+    return airports_->getAirport(airport_code);
+}
+
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
     std::ifstream airports_input("../data/airports.csv");
@@ -105,4 +109,8 @@ std::set<std::string> AirManager::getArrivalCities(const std::string &airport_co
 
 std::set<std::string> AirManager::getArrivalCountries(const std::string &airport_code) const {
     return airports_->getArrivalCountries(airport_code);
+}
+
+bool AirManager::checkIfAirportExists(const std::string &airport_code) const {
+    return airports_->checkIfAirportExists(airport_code);
 }
