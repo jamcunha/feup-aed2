@@ -5,6 +5,6 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
     AirManager airManager = AirManager();
-    airManager.local_coordenates();
+    airManager.local_city();
     return 0;
 }

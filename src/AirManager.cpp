@@ -102,7 +102,7 @@ void AirManager::local_coordenates(){
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirports(i,j);
-            if (temp.size()<traveled.size() || flag) {
+            if (temp.size()<=traveled.size() || flag) {
                 traveled.push_back(temp);
                 flag=false;
             }
@@ -133,7 +133,7 @@ void AirManager::local_city(){
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirports(i,j);
-            if (temp.size()<traveled.size() || flag) {
+            if (temp.size()<=traveled.size() || flag) {
                 traveled.push_back(temp);
                 flag=false;
             }
