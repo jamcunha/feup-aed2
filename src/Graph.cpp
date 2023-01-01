@@ -6,6 +6,7 @@
 
 Graph::Graph(bool dir): has_dir(dir) {}
 
+/*
 void Graph::shortestPath(const std::string &airport_code) {
     std::priority_queue<std::pair<std::string, double>> q;
     setUnvisited();
@@ -41,10 +42,10 @@ void Graph::shortestPath(const std::string &airport_code) {
             }
         }
     }
-}
+}*/
 
 void Graph::addNode(const std::string &airport_code, const Airport &airport) {
-    nodes.insert({ airport_code, { airport, {}, false, INF, std::list<Airport>() } });
+    nodes.insert({ airport_code, { airport, {}, false, INF, std::list<std::list<Airport>>() } });
 }
 
 void Graph::addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline) {
@@ -86,7 +87,7 @@ void Graph::bfs(const std::string &airport_code) {
     std::queue<std::string> q; // queue of unvisited nodes
     q.push(airport_code);
     nodes[airport_code].visited = true;
-    nodes[airport_code].travel_from_src.push_back(nodes[airport_code].airport);
+    nodes[airport_code].travel_from_src.push_back({nodes[airport_code].airport});
     while(!q.empty()) {
         std::string u = q.front(); q.pop();
 
@@ -96,14 +97,22 @@ void Graph::bfs(const std::string &airport_code) {
         for(const auto &e: node.adj) {
             if(!wanted_airlines.empty() && wanted_airlines.find(e.airline) == wanted_airlines.end())
                 continue;
-
             std::string w = e.dest;
+            bool equal = false;
+            if (node.travel_from_src.front().size()+1==nodes[w].travel_from_src.front().size()){
+                    equal=true;
+            }
             if(!nodes[w].visited) {
                 q.push(w);
                 nodes[w].visited = true;
-                for(const auto &n: node.travel_from_src)
-                    nodes[w].travel_from_src.push_back(n);
-                nodes[w].travel_from_src.push_back(nodes[w].airport);
+                for(auto n: node.travel_from_src){
+                    n.push_back(nodes[w].airport);
+                    nodes[w].travel_from_src.push_back(n);}
+            }
+            else if (equal){
+                for(auto n: node.travel_from_src){
+                    n.push_back(nodes[w].airport);
+                    nodes[w].travel_from_src.push_back(n);}
             }
         }
     }
@@ -114,20 +123,20 @@ int Graph::getMinFlights(const std::string &source_airport, const std::string &t
     return nodes[target_airport].travel_from_src.size() - 1;
 }
 
-std::list<Airport> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
+std::list<std::list<Airport>> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
     bfs(source_airport);
     return nodes[target_airport].travel_from_src;
 }
-
+/*
 double Graph::getShortestPath(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].src_distance;
-}
-
-std::list<Airport> Graph::getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport) {
+}*/
+/*
+std::list<std::list<Airport>> Graph::getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].travel_from_src;
-}
+}*/
 
 std::string Graph::findAirport(double latitude, double longitude){
     std::string code;

@@ -28,7 +28,7 @@ public:
 
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<Airport>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
     void local_coordenates();
 
