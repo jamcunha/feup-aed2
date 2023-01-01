@@ -55,7 +55,7 @@ public:
     // Breadth-First Search - O(|V| + |E|)
     void bfs(const std::string &airport_code);
 
-    double getShortestPath(const std::string &source_airport, const std::string &target_airport);
+    int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
     std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
@@ -64,6 +64,7 @@ public:
     std::list<std::string> findAirport_city(const std::string &city);
 
     std::list<std::string> findAirports(double latitude, double longitude);
+    double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_GRAPH_H
