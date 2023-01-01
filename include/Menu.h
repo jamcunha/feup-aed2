@@ -17,6 +17,8 @@ public:
     void init() const;
 
     void inputAirports() const;
+
+    void airportInfo() const;
 };
 
 #endif //FEUP_AED2_MENU_H
