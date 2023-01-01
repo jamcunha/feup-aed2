@@ -22,11 +22,3 @@ void utils::clearScreen() {
     std::cout << "\033[2J\033[1;1H";
 }
 
-void utils::printAirportInfo(const Airport &airport) {
-    std::cout << "Airport Info:\n\n";
-    std::cout << "Code: " << airport.getCode() << '\n';
-    std::cout << "Name: " << airport.getName() << '\n';
-    std::cout << "City: " << airport.getCity() << '\n';
-    std::cout << "Country: " << airport.getCountry() << '\n';
-}
-

@@ -28,8 +28,6 @@ namespace utils {
     double haversine(Airport &source, Airport &target);
 
     void clearScreen();
-
-    void printAirportInfo(const Airport &airport_code);
 }
 
 #endif //FEUP_AED2_UTILS_H

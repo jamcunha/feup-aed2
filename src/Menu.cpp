@@ -13,8 +13,6 @@ void Menu::init() const {
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
         std::cout << "|                                                      |\n";
-        std::cout << "|                                                      |\n";
-        std::cout << "|                                                      |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
 
@@ -42,7 +40,8 @@ void Menu::init() const {
 }
 
 void Menu::inputAirports() const {
-    std::string source, target;
+    std::string source, target, tmp;
+    Airport airport;
     char opt;
 
     utils::clearScreen();
@@ -51,8 +50,34 @@ void Menu::inputAirports() const {
         std::cin >> source;
 
         if(manager.checkIfAirportExists(source)) {
+            airport = manager.getAirport(source);
             std::cout << '\n';
-            utils::printAirportInfo(manager.getAirport(source));
+
+            std::cout << "--------------------------------------------------------\n";
+            std::cout << "|                    Airport Info                      |\n";
+
+            /* extract to a function to avoid code duplication */
+            tmp = "| Code: " + airport.getCode();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Name : " + airport.getName();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| City : " + airport.getCity();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Country : " + airport.getCountry();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+            std::cout << "--------------------------------------------------------\n";
+
             std::cout << "\nConfirm [y/n/e(xit)]: ";
             std::cin >> opt;
             if(opt == 'y')
@@ -72,8 +97,34 @@ void Menu::inputAirports() const {
         std::cin >> target;
 
         if(manager.checkIfAirportExists(target)) {
+            airport = manager.getAirport(target);
             std::cout << '\n';
-            utils::printAirportInfo(manager.getAirport(source));
+
+            std::cout << "--------------------------------------------------------\n";
+            std::cout << "|                    Airport Info                      |\n";
+
+            /* extract to a function to avoid code duplication */
+            tmp = "| Code: " + airport.getCode();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Name : " + airport.getName();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| City : " + airport.getCity();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Country : " + airport.getCountry();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+            std::cout << "--------------------------------------------------------\n";
+
             std::cout << "\nConfirm [y/n/e(xit)]: ";
             std::cin >> opt;
             if(opt == 'y')
@@ -112,6 +163,7 @@ void Menu::airportInfo() const {
     std::cout << "--------------------------------------------------------\n";
     std::cout << "|                    Airport Info                      |\n";
 
+    /* extract to a function to avoid code duplication */
     tmp = "| Code: " + airport.getCode();
     std::cout << tmp;
     for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
