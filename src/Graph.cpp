@@ -129,10 +129,6 @@ double Graph::getShortestPath(const std::string &source_airport, const std::stri
     return nodes.at(target_airport).src_distance;
 }
 
-int Graph::getNumberOfFlights(const std::string &airport_code) const {
-    return nodes.at(airport_code).adj.size();
-}
-
 std::set<std::string> Graph::getAirlinesFromAirport(const std::string &airport_code) const {
     std::set<std::string> airlines;
     for(auto &a: nodes.at(airport_code).adj)
@@ -184,6 +180,14 @@ std::set<std::string> Graph::getCountriesReached(const std::string &source_airpo
     }
 
     return countries;
+}
+
+std::set<std::string> Graph::getArrivalAirports(const std::string &airport_code) const {
+    std::set<std::string> airports;
+    for(auto &a: nodes.at(airport_code).adj)
+        airports.insert(a.dest);
+
+    return airports;
 }
 
 std::set<std::string> Graph::getArrivalCities(const std::string &airport_code) const {

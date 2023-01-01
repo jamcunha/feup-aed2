@@ -19,6 +19,8 @@ public:
     void inputAirports() const;
 
     void airportInfo() const;
+
+    void flightsFromAirportInfo(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_MENU_H

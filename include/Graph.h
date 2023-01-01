@@ -66,9 +66,6 @@ public:
     // Get number of kilometers traveled in a straight line from a source airport to a target airport
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
-    // Number of existing flights from an airport
-    int getNumberOfFlights(const std::string &airport_code) const;
-
     // Get all airlines present in an airport
     std::set<std::string> getAirlinesFromAirport(const std::string &airport_code) const;
 
@@ -80,6 +77,9 @@ public:
 
     // Get all countries that can be reached from a source airport in a number k of flights
     std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+
+    // Get airports that can be reached with 1 flight from a source airport
+    std::set<std::string> getArrivalAirports(const std::string &airport_code) const;
 
     // Get cities that can be reached with 1 flight from a source airport
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;

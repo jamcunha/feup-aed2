@@ -1,5 +1,7 @@
 #include "../include/Menu.h"
 
+#include <sstream>
+
 Menu::Menu(): manager(AirManager()) {}
 
 void Menu::init() const {
@@ -157,7 +159,6 @@ void Menu::airportInfo() const {
     }
 
     utils::clearScreen();
-    std::cout << "\n\n";
     std::string tmp;
 
     std::cout << "--------------------------------------------------------\n";
@@ -204,6 +205,7 @@ void Menu::airportInfo() const {
 
     switch(opt) {
         case '1':
+            flightsFromAirportInfo(airport_code);
             break;
         case '2':
             break;
@@ -215,5 +217,35 @@ void Menu::airportInfo() const {
             utils::clearScreen();
             return;
     }
+}
+
+void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
+    std::set<std::string> airports = manager.getArrivalAirport(airport_code);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Airports:                                    |\n";
+    for(const auto &airport: airports) {
+        tmp = "| Airport - " + airport;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+
+    std::cout << "|                                                      |\n";
+
+    ss << "| You can reach " << airports.size() << " airports.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+
+    char opt;
+    std::cin >> opt;
 }
 

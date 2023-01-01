@@ -29,9 +29,9 @@ public:
 
     std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
-    int getNumberOfFlights(const std::string &airport_code) const;
-
     std::list<Airline> getAirlinesFromAirport(const std::string &airport_code) const;
+
+    std::set<std::string> getArrivalAirport(const std::string &airport_code) const;
 
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;
 

@@ -89,10 +89,6 @@ std::list<Airport> AirManager::getTraveledAirports(const std::string &source_air
     return airports_->getTraveledAirports(source_airport, target_airport);
 }
 
-int AirManager::getNumberOfFlights(const std::string &airport_code) const {
-    return airports_->getNumberOfFlights(airport_code);
-}
-
 std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport_code) const {
     std::set<std::string> airlines_code = airports_->getAirlinesFromAirport(airport_code);
     std::list<Airline> airlines;
@@ -101,6 +97,10 @@ std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport
         airlines.push_back(airlines_.find(it)->second);
 
     return airlines;
+}
+
+std::set<std::string> AirManager::getArrivalAirport(const std::string &airport_code) const {
+    return airports_->getArrivalAirports(airport_code);
 }
 
 std::set<std::string> AirManager::getArrivalCities(const std::string &airport_code) const {
