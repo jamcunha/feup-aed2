@@ -89,6 +89,12 @@ public:
 
     // Check if airport exists in nodes hash table
     bool checkIfAirportExists(const std::string &airport_code) const;
+
+    void addWantedAirline(const std::string &airline_code);
+
+    bool removeWantedAirline(const std::string &airline_code);
+
+    void clearWantedAirline();
 };
 
 #endif //FEUP_AED2_GRAPH_H

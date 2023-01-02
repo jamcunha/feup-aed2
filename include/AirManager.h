@@ -44,6 +44,12 @@ public:
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
 
     bool checkIfAirportExists(const std::string &airport_code) const;
+
+    bool addWantedAirline(const std::string &airline_code);
+
+    bool removeWantedAirline(const std::string &airline_code);
+
+    void clearWantedAirline();
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

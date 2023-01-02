@@ -14,6 +14,7 @@ void Menu::init() {
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
         std::cout << "|                                                      |\n";
+        std::cout << "| 9 - Settings                                         |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
 
@@ -21,7 +22,7 @@ void Menu::init() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '2' && opt >= '0')
+            if(opt <= '2' && opt >= '0' || opt == '9')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -32,6 +33,9 @@ void Menu::init() {
                 break;
             case '2':
                 airportInfo();
+                break;
+            case '9':
+                settings();
                 break;
             default:
                 utils::clearScreen();
@@ -529,5 +533,86 @@ void Menu::reachableCountriesInFlights(const std::string &airport_code, int nr_f
     std::cin.ignore(); // ignore characters in buffer
     while(std::cin.get() != '\n')
         continue;
+}
+
+void Menu::settings() {
+    while(true) {
+        utils::clearScreen();
+        std::cout << "--------------------------------------------------------\n";
+        std::cout << "|                      Settings                        |\n";
+        std::cout << "|                                                      |\n";
+        std::cout << "| 1 - Add wanted airline                               |\n";
+        std::cout << "| 2 - Remove wanted airline                            |\n";
+        std::cout << "| 3 - Clear wanted airlines                            |\n";
+        std::cout << "|                                                      |\n";
+        std::cout << "| 0 - Exit                                             |\n";
+        std::cout << "--------------------------------------------------------\n";
+
+        char opt;
+        while(true) {
+            std::cout << "\nOption: ";
+            std::cin >> opt;
+            if(opt <= '3' && opt >= '0')
+                break;
+            std::cout << "Not a valid option, please choose another.\n";
+        }
+
+        std::string airline_code;
+        switch(opt) {
+            case '1':
+                utils::clearScreen();
+                std::cout << "Type the airline code: ";
+                std::cin >> airline_code;
+
+                if(manager.addWantedAirline(airline_code))
+                    std::cout << "\nAdded airline " << airline_code << " to wanted airlines.\n";
+                else
+                    std::cout << "\nAirline not found.\n";
+
+                std::cout << "\nPress <Enter> to go to settings...";
+
+                /* wait for enter to be pressed */
+                std::cin.ignore(); // ignore characters in buffer
+                while(std::cin.get() != '\n')
+                    continue;
+
+                break;
+            case '2':
+                utils::clearScreen();
+                std::cout << "Type the airline code: ";
+                std::cin >> airline_code;
+
+                if(manager.removeWantedAirline(airline_code))
+                    std::cout << "\nRemoved airline " << airline_code << " from wanted airlines.\n";
+                else
+                    std::cout << "\nAirline not found.\n";
+
+                std::cout << "\nPress <Enter> to go to settings...";
+
+                /* wait for enter to be pressed */
+                std::cin.ignore(); // ignore characters in buffer
+                while(std::cin.get() != '\n')
+                    continue;
+
+                break;
+            case '3':
+                utils::clearScreen();
+                manager.clearWantedAirline();
+
+                std::cout << "Cleared wanted airlines.\n";
+
+                std::cout << "\nPress <Enter> to go to main menu...";
+
+                /* wait for enter to be pressed */
+                std::cin.ignore(); // ignore characters in buffer
+                while(std::cin.get() != '\n')
+                    continue;
+
+                return;
+            default:
+                utils::clearScreen();
+                return;
+        }
+    }
 }
 

@@ -126,3 +126,23 @@ std::set<std::string> AirManager::getArrivalCountries(const std::string &airport
 bool AirManager::checkIfAirportExists(const std::string &airport_code) const {
     return airports_->checkIfAirportExists(airport_code);
 }
+
+bool AirManager::addWantedAirline(const std::string &airline_code) {
+    if(airlines_.find(airline_code) == airlines_.end())
+        return false;
+
+    airports_->addWantedAirline(airline_code);
+    return true;
+}
+
+bool AirManager::removeWantedAirline(const std::string &airline_code) {
+    if(airlines_.find(airline_code) == airlines_.end())
+        return false;
+
+    return airports_->removeWantedAirline(airline_code);
+}
+
+void AirManager::clearWantedAirline() {
+    airports_->clearWantedAirline();
+}
+

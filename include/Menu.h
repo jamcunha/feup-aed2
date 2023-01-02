@@ -35,6 +35,8 @@ public:
     void reachableCitiesInFlights(const std::string &airport_code, int nr_flights);
 
     void reachableCountriesInFlights(const std::string &airport_code, int nr_flights);
+
+    void settings();
 };
 
 #endif //FEUP_AED2_MENU_H
