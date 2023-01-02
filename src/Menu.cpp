@@ -208,6 +208,7 @@ void Menu::airportInfo() const {
             flightsFromAirportInfo(airport_code);
             break;
         case '2':
+            airlinesFromAirportInfo(airport_code);
             break;
         case '3':
             break;
@@ -242,6 +243,33 @@ void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
     std::cout << tmp;
     for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
     std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
+void Menu::airlinesFromAirportInfo(const std::string &airport_code) const {
+    std::list<Airline> airlines = manager.getAirlinesFromAirport(airport_code);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Airlines:                                    |\n";
+    for(const Airline &airline: airlines) {
+        tmp = "| Airline - " + airline.getCode() + " - " + airline.getName();
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+
+    std::cout << "|                                                      |\n";
 
     std::cout << "--------------------------------------------------------\n";
     std::cout << "\nPress <Enter> to go to main menu...";
