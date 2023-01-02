@@ -30,7 +30,11 @@ public:
 
     void reachInFlights(const std::string &airport_code);
 
-    void reachableAirportsInFlights(const std::string &airport_code, int nr_fligths);
+    void reachableAirportsInFlights(const std::string &airport_code, int nr_flights);
+
+    void reachableCitiesInFlights(const std::string &airport_code, int nr_flights);
+
+    void reachableCountriesInFlights(const std::string &airport_code, int nr_flights);
 };
 
 #endif //FEUP_AED2_MENU_H

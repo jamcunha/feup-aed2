@@ -391,13 +391,14 @@ void Menu::reachInFlights(const std::string &airport_code) {
             reachableAirportsInFlights(airport_code, nr_flights);
             break;
         case '2':
+            reachableCitiesInFlights(airport_code, nr_flights);
             break;
         case '3':
+            reachableCountriesInFlights(airport_code, nr_flights);
             break;
         default:
             utils::clearScreen();
-            return;
-    }
+            return; }
 }
 
 void Menu::reachableAirportsInFlights(const std::string &airport_code, int nr_flights) {
@@ -419,6 +420,72 @@ void Menu::reachableAirportsInFlights(const std::string &airport_code, int nr_fl
     std::cout << "|                                                      |\n";
 
     ss << "| You can reach " << airports.size() << " airports.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
+void Menu::reachableCitiesInFlights(const std::string &airport_code, int nr_flights) {
+    std::set<std::string> cities = manager.getCitiesReached(airport_code, nr_flights);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Cities:                                      |\n";
+    std::cout << "|                                                      |\n";
+    for(const std::string &city: cities) {
+        tmp = "| " + city;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+    std::cout << "|                                                      |\n";
+
+    ss << "| You can reach " << cities.size() << " cities.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
+void Menu::reachableCountriesInFlights(const std::string &airport_code, int nr_flights) {
+    std::set<std::string> countries = manager.getCountriesReached(airport_code, nr_flights);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Countries:                                   |\n";
+    std::cout << "|                                                      |\n";
+    for(const std::string &country: countries) {
+        tmp = "| " + country;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+    std::cout << "|                                                      |\n";
+
+    ss << "| You can reach " << countries.size() << " countries.";
     tmp = ss.str();
     std::cout << tmp;
     for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
