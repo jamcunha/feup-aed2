@@ -244,8 +244,11 @@ void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
     std::cout << "|\n";
 
     std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
 
-    char opt;
-    std::cin >> opt;
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
 }
 
