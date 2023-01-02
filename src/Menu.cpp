@@ -228,8 +228,8 @@ void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
     std::cout << "--------------------------------------------------------\n";
 
     std::cout << "| List of Airports:                                    |\n";
-    for(const auto &airport: airports) {
-        tmp = "| Airport - " + airport;
+    for(const std::string &airport_code: airports) {
+        tmp = "| Airport - " + manager.getAirport(airport_code).getCode() + " - " + manager.getAirport(airport_code).getName();
         std::cout << tmp;
         for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
         std::cout << "|\n";
