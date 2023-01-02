@@ -8,7 +8,6 @@ void Menu::init() const {
 
     while(true) {
         utils::clearScreen();
-
         std::cout << "--------------------------------------------------------\n";
         std::cout << "|           Welcome to the Airport Manager             |\n";
         std::cout << "|                                                      |\n";
@@ -188,7 +187,7 @@ void Menu::airportInfo() const {
     std::cout << "|                                                      |\n";
     std::cout << "| 1 - Flighs                                           |\n";
     std::cout << "| 2 - Airlines                                         |\n";
-    std::cout << "| 3 - Destinations                                     |\n";
+    std::cout << "| 3 - Destination Cities                               |\n";
     std::cout << "| 4 - Destination Countries                            |\n";
     std::cout << "|                                                      |\n";
     std::cout << "| 0 - Return to Main Menu                              |\n";
@@ -211,6 +210,7 @@ void Menu::airportInfo() const {
             airlinesFromAirportInfo(airport_code);
             break;
         case '3':
+            citiesFromAirportInfo(airport_code);
             break;
         case '4':
             break;
@@ -270,6 +270,45 @@ void Menu::airlinesFromAirportInfo(const std::string &airport_code) const {
     }
 
     std::cout << "|                                                      |\n";
+
+    ss << "| Airport have " << airlines.size() << " airlines available.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
+void Menu::citiesFromAirportInfo(const std::string &airport_code) const {
+    std::set<std::string> cities = manager.getArrivalCities(airport_code);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Cities:                                    |\n";
+    for(const std::string &city: cities) {
+        tmp = "| " + city;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+
+    std::cout << "|                                                      |\n";
+
+    ss << "| You can reach " << cities.size() << " cities.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
 
     std::cout << "--------------------------------------------------------\n";
     std::cout << "\nPress <Enter> to go to main menu...";
