@@ -111,7 +111,7 @@ void AirManager::local_coordenates(){
     std::cout<<"Path:\n";
     for (auto i :traveled){
         for (auto j:i){
-            std::cout<<"->"<<j.getCode();
+            std::cout<<"->"<<j.getCode()<<"-"<<"airline";
         }
         std::cout<<"\n";
     }
@@ -142,12 +142,12 @@ void AirManager::local_city(){
     std::cout<<"Path:\n";
     for (auto i :traveled){
         for (auto j:i){
-            std::cout<<"->"<<j.getCode()<<"-"<<;
+            std::cout<<"->"<<j.getCode()<<"-"<<"airline";
         }
         std::cout<<"\n";
     }
 }
-/*
+
 void AirManager::local_coordenates_closest() {
     double start_longitude, start_latitude, end_longitude, end_latitude;
     std::cout<<"Insert start's longitude: \n";
@@ -162,7 +162,10 @@ void AirManager::local_coordenates_closest() {
     std::string end = airports_->findAirport(end_latitude,end_longitude);
     std::cout<<"Path:\n";
     for (auto i :airports_->getTraveledAirports(start, end)){
-        std::cout<<"->"<<i.getCode();
+        for (auto j:i){
+            std::cout<<"->"<<j.getCode()<<"-"<<"airline";
+        }
+        std::cout<<"\n";
     }
 }
 */

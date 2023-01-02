@@ -98,10 +98,6 @@ void Graph::bfs(const std::string &airport_code) {
             if(!wanted_airlines.empty() && wanted_airlines.find(e.airline) == wanted_airlines.end())
                 continue;
             std::string w = e.dest;
-            bool equal = false;
-            if (node.travel_from_src.front().size()+1==nodes[w].travel_from_src.front().size()){
-                    equal=true;
-            }
             if(!nodes[w].visited) {
                 q.push(w);
                 nodes[w].visited = true;
@@ -109,7 +105,7 @@ void Graph::bfs(const std::string &airport_code) {
                     n.push_back(nodes[w].airport);
                     nodes[w].travel_from_src.push_back(n);}
             }
-            else if (equal){
+            else if (node.travel_from_src.front().size()+1==nodes[w].travel_from_src.front().size()){
                 for(auto n: node.travel_from_src){
                     n.push_back(nodes[w].airport);
                     nodes[w].travel_from_src.push_back(n);}
