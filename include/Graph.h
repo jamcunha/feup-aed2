@@ -2,6 +2,7 @@
 #define FEUP_AED2_GRAPH_H
 
 #include "Airport.h"
+#include "Airline.h"
 
 #include <list>
 #include <unordered_map>
@@ -23,7 +24,7 @@ private:
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
         double src_distance; // Distance to source node (used to find the shortest path to node)
-        std::list<std::list<Airport>> travel_from_src; // vector that stores all airports traveler from source to target in order
+        std::list<std::list<std::pair<Airport,std::string>>> travel_from_src; // vector that stores all airports traveler from source to target in order
         // maybe could just store the code
     };
 
@@ -57,7 +58,7 @@ public:
 
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<std::list<Airport>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
     std::string findAirport(double latitude, double longitude);
 
