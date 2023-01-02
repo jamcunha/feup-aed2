@@ -14,11 +14,11 @@ private:
 public:
     Menu();
 
-    void init() const;
+    void init();
 
     void inputAirports() const;
 
-    void airportInfo() const;
+    void airportInfo();
 
     void flightsFromAirportInfo(const std::string &airport_code) const;
 
@@ -27,6 +27,10 @@ public:
     void citiesFromAirportInfo(const std::string &airport_code) const;
 
     void countriesFromAirportInfo(const std::string &airport_code) const;
+
+    void reachInFlights(const std::string &airport_code);
+
+    void reachableAirportsInFlights(const std::string &airport_code, int nr_fligths);
 };
 
 #endif //FEUP_AED2_MENU_H

@@ -99,6 +99,18 @@ std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport
     return airlines;
 }
 
+std::list<Airport> AirManager::getAirportsReached(const std::string &source_airport, int k) {
+    return airports_->getAirportsReached(source_airport, k);
+}
+
+std::set<std::string> AirManager::getCitiesReached(const std::string &source_airport, int k) {
+    return airports_->getCitiesReached(source_airport, k);
+}
+
+std::set<std::string> AirManager::getCountriesReached(const std::string &source_airport, int k) {
+    return airports_->getCountriesReached(source_airport, k);
+}
+
 std::set<std::string> AirManager::getArrivalAirport(const std::string &airport_code) const {
     return airports_->getArrivalAirports(airport_code);
 }

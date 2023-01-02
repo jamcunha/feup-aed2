@@ -31,6 +31,12 @@ public:
 
     std::list<Airline> getAirlinesFromAirport(const std::string &airport_code) const;
 
+    std::list<Airport> getAirportsReached(const std::string &source_airport, int k);
+
+    std::set<std::string> getCitiesReached(const std::string &source_airport, int k);
+
+    std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+
     std::set<std::string> getArrivalAirport(const std::string &airport_code) const;
 
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;
