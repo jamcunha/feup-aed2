@@ -42,6 +42,7 @@ void Menu::init() {
 
 void Menu::inputAirports() const {
     std::string source, target, tmp;
+    std::stringstream ss;
     Airport airport;
     char opt;
 
@@ -138,6 +139,36 @@ void Menu::inputAirports() const {
             std::cout << "Airport doesn't exists\n\n";
         }
     }
+
+    std::list<Airport> traveled_airprots = manager.getTraveledAirports(source, target);
+    utils::clearScreen();
+
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "|                    Flight Info                       |\n";
+    std::cout << "|                                                      |\n";
+
+    for(const Airport &traveled_airport: traveled_airprots) {
+        tmp = "| Airport - " + traveled_airport.getCode() /* + " - " + traveled_airport.getName() */;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+    std::cout << "|                                                      |\n";
+
+    ss << "| You traveled by " << traveled_airprots.size() << " airports.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
 }
 
 void Menu::airportInfo() {

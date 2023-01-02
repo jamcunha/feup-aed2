@@ -85,7 +85,7 @@ int AirManager::getMinFlights(const std::string &source_airport, const std::stri
     return airports_->getMinFlights(source_airport, target_airport);
 }
 
-std::list<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
+std::list<Airport> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const {
     return airports_->getTraveledAirports(source_airport, target_airport);
 }
 
