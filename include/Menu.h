@@ -25,6 +25,8 @@ public:
     void airlinesFromAirportInfo(const std::string &airport_code) const;
 
     void citiesFromAirportInfo(const std::string &airport_code) const;
+
+    void countriesFromAirportInfo(const std::string &airport_code) const;
 };
 
 #endif //FEUP_AED2_MENU_H

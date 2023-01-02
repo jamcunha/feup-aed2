@@ -213,6 +213,7 @@ void Menu::airportInfo() const {
             citiesFromAirportInfo(airport_code);
             break;
         case '4':
+            countriesFromAirportInfo(airport_code);
             break;
         default:
             utils::clearScreen();
@@ -229,6 +230,7 @@ void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
     std::cout << "--------------------------------------------------------\n";
 
     std::cout << "| List of Airports:                                    |\n";
+    std::cout << "|                                                      |\n";
     for(const std::string &airport_code: airports) {
         tmp = "| Airport - " + manager.getAirport(airport_code).getCode() + " - " + manager.getAirport(airport_code).getName();
         std::cout << tmp;
@@ -262,6 +264,7 @@ void Menu::airlinesFromAirportInfo(const std::string &airport_code) const {
     std::cout << "--------------------------------------------------------\n";
 
     std::cout << "| List of Airlines:                                    |\n";
+    std::cout << "|                                                      |\n";
     for(const Airline &airline: airlines) {
         tmp = "| Airline - " + airline.getCode() + " - " + airline.getName();
         std::cout << tmp;
@@ -294,7 +297,8 @@ void Menu::citiesFromAirportInfo(const std::string &airport_code) const {
     utils::clearScreen();
     std::cout << "--------------------------------------------------------\n";
 
-    std::cout << "| List of Cities:                                    |\n";
+    std::cout << "| List of Cities:                                      |\n";
+    std::cout << "|                                                      |\n";
     for(const std::string &city: cities) {
         tmp = "| " + city;
         std::cout << tmp;
@@ -305,6 +309,40 @@ void Menu::citiesFromAirportInfo(const std::string &airport_code) const {
     std::cout << "|                                                      |\n";
 
     ss << "| You can reach " << cities.size() << " cities.";
+    tmp = ss.str();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
+void Menu::countriesFromAirportInfo(const std::string &airport_code) const {
+    std::set<std::string> countries = manager.getArrivalCountries(airport_code);
+    std::string tmp;
+    std::stringstream ss;
+
+    utils::clearScreen();
+    std::cout << "--------------------------------------------------------\n";
+
+    std::cout << "| List of Countries:                                   |\n";
+    std::cout << "|                                                      |\n";
+    for(const std::string &country: countries) {
+        tmp = "| " + country;
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+    }
+
+    std::cout << "|                                                      |\n";
+
+    ss << "| You can reach " << countries.size() << " countries.";
     tmp = ss.str();
     std::cout << tmp;
     for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
