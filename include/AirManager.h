@@ -22,6 +22,8 @@ public:
     ~AirManager();
 
     Airport getAirport(const std::string &airport_code) const;
+    
+    Airline getAirline(const std::string &airline_code) const;
 
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
@@ -53,11 +55,15 @@ public:
 
     bool checkIfAirportExists(const std::string &airport_code) const;
 
+    bool checkIfAirlineExists(const std::string &airline_code) const;
+
     bool addWantedAirline(const std::string &airline_code);
 
     bool removeWantedAirline(const std::string &airline_code);
 
     void clearWantedAirline();
+
+    std::unordered_set<std::string> getWantedAirlines() const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

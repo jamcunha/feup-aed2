@@ -295,3 +295,7 @@ void Graph::clearWantedAirline() {
     wanted_airlines.clear();
 }
 
+std::unordered_set<std::string> Graph::getWantedAirlines() const {
+    return wanted_airlines;
+}
+

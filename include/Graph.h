@@ -108,6 +108,8 @@ public:
     bool removeWantedAirline(const std::string &airline_code);
 
     void clearWantedAirline();
+
+    std::unordered_set<std::string> getWantedAirlines() const;
 };
 
 #endif //FEUP_AED2_GRAPH_H

@@ -17,6 +17,10 @@ Airport AirManager::getAirport(const std::string &airport_code) const {
     return airports_->getAirport(airport_code);
 }
 
+Airline AirManager::getAirline(const std::string &airline_code) const {
+    return airlines_.at(airline_code);
+}
+
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
     std::ifstream airports_input("../data/airports.csv");
@@ -179,8 +183,15 @@ bool AirManager::checkIfAirportExists(const std::string &airport_code) const {
     return airports_->checkIfAirportExists(airport_code);
 }
 
+bool AirManager::checkIfAirlineExists(const std::string &airline_code) const {
+    return (airlines_.find(airline_code) != airlines_.end());
+}
+
 bool AirManager::addWantedAirline(const std::string &airline_code) {
     if(airlines_.find(airline_code) == airlines_.end())
+        return false;
+
+    if(airports_->getWantedAirlines().find(airline_code) != airports_->getWantedAirlines().end())
         return false;
 
     airports_->addWantedAirline(airline_code);
@@ -196,5 +207,9 @@ bool AirManager::removeWantedAirline(const std::string &airline_code) {
 
 void AirManager::clearWantedAirline() {
     airports_->clearWantedAirline();
+}
+
+std::unordered_set<std::string> AirManager::getWantedAirlines() const {
+    return airports_->getWantedAirlines();
 }
 

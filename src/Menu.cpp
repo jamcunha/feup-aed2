@@ -543,6 +543,7 @@ void Menu::settings() {
         std::cout << "| 1 - Add wanted airline                               |\n";
         std::cout << "| 2 - Remove wanted airline                            |\n";
         std::cout << "| 3 - Clear wanted airlines                            |\n";
+        std::cout << "| 4 - List wanted airlines                             |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
@@ -551,22 +552,62 @@ void Menu::settings() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '3' && opt >= '0')
+            if(opt <= '4' && opt >= '0')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
 
+        std::unordered_set<std::string> wanter_airlines = manager.getWantedAirlines();
+        std::string tmp;
         std::string airline_code;
+        Airline airline;
         switch(opt) {
             case '1':
                 utils::clearScreen();
                 std::cout << "Type the airline code: ";
                 std::cin >> airline_code;
 
-                if(manager.addWantedAirline(airline_code))
-                    std::cout << "\nAdded airline " << airline_code << " to wanted airlines.\n";
-                else
-                    std::cout << "\nAirline not found.\n";
+                if(manager.checkIfAirlineExists(airline_code)) {
+                    airline = manager.getAirline(airline_code);
+                    std::cout << '\n';
+
+                    std::cout << "--------------------------------------------------------\n";
+                    std::cout << "|                    Airline Info                      |\n";
+
+                    /* extract to a function to avoid code duplication */
+                    tmp = "| Code: " + airline.getCode();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Name : " + airline.getName();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Call Sign : " + airline.getCallsign();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Country : " + airline.getCountry();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+                    std::cout << "--------------------------------------------------------\n";
+
+                    std::cout << "\nConfirm [y/n]: ";
+                    std::cin >> opt;
+                    if(opt == 'n')
+                        break;
+
+                    if(manager.addWantedAirline(airline_code))
+                        std::cout << "\nAdded airline " << airline_code << " to wanted airlines.\n";
+                    else
+                        std::cout << "\nAirline already in the list.\n";
+                } else {
+                    std::cout << "Airline doesn't exists\n\n";
+                }
 
                 std::cout << "\nPress <Enter> to go to settings...";
 
@@ -581,10 +622,47 @@ void Menu::settings() {
                 std::cout << "Type the airline code: ";
                 std::cin >> airline_code;
 
-                if(manager.removeWantedAirline(airline_code))
-                    std::cout << "\nRemoved airline " << airline_code << " from wanted airlines.\n";
-                else
-                    std::cout << "\nAirline not found.\n";
+                if(manager.checkIfAirlineExists(airline_code)) {
+                    airline = manager.getAirline(airline_code);
+                    std::cout << '\n';
+
+                    std::cout << "--------------------------------------------------------\n";
+                    std::cout << "|                    Airline Info                      |\n";
+
+                    /* extract to a function to avoid code duplication */
+                    tmp = "| Code: " + airline.getCode();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Name : " + airline.getName();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Call Sign : " + airline.getCallsign();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+
+                    tmp = "| Country : " + airline.getCountry();
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+                    std::cout << "--------------------------------------------------------\n";
+
+                    std::cout << "\nConfirm [y/n]: ";
+                    std::cin >> opt;
+                    if(opt == 'n')
+                        break;
+
+                    if(manager.removeWantedAirline(airline_code))
+                        std::cout << "\nRemoved airline " << airline_code << " from wanted airlines.\n";
+                    else
+                        std::cout << "\nAirline not found.\n";
+                } else {
+                    std::cout << "Airline doesn't exists\n\n";
+                }
 
                 std::cout << "\nPress <Enter> to go to settings...";
 
@@ -608,6 +686,29 @@ void Menu::settings() {
                     continue;
 
                 return;
+            case '4':
+                utils::clearScreen();
+
+                std::cout << "--------------------------------------------------------\n";
+                std::cout << "| List of Wanted Airlines:                             |\n";
+                std::cout << "|                                                      |\n";
+
+                for(const std::string &airline_code: wanter_airlines) {
+                    tmp = "| Airline - " + airline_code;
+                    std::cout << tmp;
+                    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                    std::cout << "|\n";
+                }
+                std::cout << "--------------------------------------------------------\n";
+
+                std::cout << "\nPress <Enter> to go to main menu...";
+
+                /* wait for enter to be pressed */
+                std::cin.ignore(); // ignore characters in buffer
+                while(std::cin.get() != '\n')
+                    continue;
+
+                break;
             default:
                 utils::clearScreen();
                 return;
