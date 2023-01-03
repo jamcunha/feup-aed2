@@ -146,6 +146,7 @@ void AirManager::local_city(){
         }
 
     }
+
     std::cout<<"Path:\n";
     for (auto i :traveled){
         flag= false;

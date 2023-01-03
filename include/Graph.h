@@ -67,7 +67,12 @@ public:
     std::list<std::string> findAirports(double latitude, double longitude);
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<std::list<Airport>> getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport);
+    struct CompareDistance{
+        bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2){
+            return n1.second>n2.second;
+        }
+    };
 };
 
 #endif //FEUP_AED2_GRAPH_H
