@@ -29,12 +29,12 @@ public:
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
 
-    void localCoordinates();
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(std::string start, std::string end);
 
-    void localCity();
-
-    void localCoordinatesClosest();
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H
