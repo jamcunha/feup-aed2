@@ -6,19 +6,27 @@
 
 Graph::Graph(bool dir): has_dir(dir) {}
 
+// used in priority queue used in dijkstra algorithm
+struct CompareDistance {
+    bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2) {
+        return n1.second>n2.second;
+    }
+};
 
 void Graph::shortestPath(const std::string &airport_code) {
     std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, CompareDistance> q;
+
     setUnvisited();
     nodes[airport_code].src_distance = 0;
     nodes[airport_code].travel_from_src.push_back({{nodes[airport_code].airport,""}});
+
     for(auto &node: nodes) {
-        if(node.first != airport_code) {
+        if(node.first != airport_code)
             node.second.src_distance = INF;
-        }
-        else{
-        q.push({ node.first, node.second.src_distance });}
+        else
+            q.push({ node.first, node.second.src_distance });
     }
+
     while(!q.empty()) {
         std::pair<std::string, double> u = q.top(); q.pop();
         Node& node = nodes[u.first];
@@ -29,16 +37,18 @@ void Graph::shortestPath(const std::string &airport_code) {
             Node &v = nodes[e.dest];
             if(alt < v.src_distance) {
                 v.travel_from_src.clear();
-                for(auto n : node.travel_from_src){
+                for(auto n : node.travel_from_src) {
                     n.push_back({v.airport,e.airline});
-                    v.travel_from_src.push_back(n);}
+                    v.travel_from_src.push_back(n);
+                }
                 v.src_distance = alt;
                 q.push({ e.dest, alt });
             }
             else if (alt<INF && alt == v.src_distance ){
-                for(auto n : node.travel_from_src){
+                for(auto n : node.travel_from_src) {
                     n.push_back({v.airport,e.airline});
-                    v.travel_from_src.push_back(n);}
+                    v.travel_from_src.push_back(n);
+                }
             }
         }
     }
@@ -87,7 +97,8 @@ void Graph::bfs(const std::string &airport_code) {
     std::queue<std::string> q; // queue of unvisited nodes
     q.push(airport_code);
     nodes[airport_code].visited = true;
-    nodes[airport_code].travel_from_src.push_back({{nodes[airport_code].airport,""}});
+    nodes[airport_code].travel_from_src.push_back({ { nodes[airport_code].airport, "" } });
+
     while(!q.empty()) {
         std::string u = q.front(); q.pop();
 
@@ -99,28 +110,29 @@ void Graph::bfs(const std::string &airport_code) {
                 continue;
             std::string w = e.dest;
 
-
             if(!nodes[w].visited) {
                 q.push(w);
                 nodes[w].visited = true;
-                for(auto n: node.travel_from_src){
-                    n.push_back({nodes[w].airport,e.airline});
-                    nodes[w].travel_from_src.push_back(n);}
+                for(auto n: node.travel_from_src) {
+                    n.push_back({nodes[w].airport, e.airline});
+                    nodes[w].travel_from_src.push_back(n);
+                }
             }
             else if (node.travel_from_src.front().size()+1==nodes[w].travel_from_src.front().size()){
                 bool flag = true;
-                for (auto n : nodes[w].travel_from_src){
+                for (auto n : nodes[w].travel_from_src) {
                     auto it = n.end();
                     std::advance(it,-2);
-                    if (it->first==node.airport){
+                    if (it->first==node.airport) {
                         flag= false;
                         break;
                     }
                 }
                 if (!flag) continue;
-                for(auto n: node.travel_from_src){
+                for(auto n: node.travel_from_src) {
                     n.push_back({nodes[w].airport,e.airline});
-                    nodes[w].travel_from_src.push_back(n);}
+                    nodes[w].travel_from_src.push_back(n);
+                }
             }
         }
     }
@@ -141,7 +153,7 @@ double Graph::getShortestPath(const std::string &source_airport, const std::stri
     return nodes[target_airport].src_distance;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport) {
+std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirportsByDistance(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].travel_from_src;
 }
@@ -150,7 +162,7 @@ std::string Graph::findAirport(double latitude, double longitude){
     std::string code;
     double latitude_min=MAXFLOAT, longitude_min=MAXFLOAT;
     for (auto node: nodes) {
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<utils::haversine(latitude,latitude_min,longitude,longitude_min)){
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<utils::haversine(latitude,latitude_min,longitude,longitude_min)) {
             code = node.second.airport.getCode();
             latitude_min=node.second.airport.getLatitude();
             longitude_min=node.second.airport.getLongitude();
@@ -162,16 +174,16 @@ std::string Graph::findAirport(double latitude, double longitude){
 std::list<std::string> Graph::findAirports(double latitude, double longitude){
     std::list<std::string> airports ;
     for (auto node: nodes) {
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100){
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100) {
             airports.push_back(node.first);
         }
     }
     return airports;
 }
 
-std::list<std::string> Graph::findAirport_city(const std::string &city) {
+std::list<std::string> Graph::findAirportByCity(const std::string &city) {
     std::list<std::string> airports;
-    for (auto node:nodes){
+    for (auto node:nodes) {
         if(node.second.airport.getCity() == city)
             airports.push_back(node.first);
     }

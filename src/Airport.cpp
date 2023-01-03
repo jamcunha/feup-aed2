@@ -33,3 +33,4 @@ std::string Airport::getCity() const {
 bool Airport::operator==(const Airport &airport) const {
     return code_ == airport.getCode();
 }
+

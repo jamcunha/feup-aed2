@@ -24,8 +24,7 @@ private:
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
         double src_distance; // Distance to source node (used to find the shortest path to node)
-        std::list<std::list<std::pair<Airport,std::string>>> travel_from_src; // vector that stores all airports traveler from source to target in order
-        // maybe could just store the code
+        std::list<std::list<std::pair<Airport,std::string>>> travel_from_src; // list that stores lists of airports and airline taken from source to target
     };
 
     bool has_dir; // false: undirected; true: directed
@@ -58,21 +57,19 @@ public:
 
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
+    // Criteria: minimum number of flights
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
     std::string findAirport(double latitude, double longitude);
 
-    std::list<std::string> findAirport_city(const std::string &city);
+    std::list<std::string> findAirportByCity(const std::string &city);
 
     std::list<std::string> findAirports(double latitude, double longitude);
+
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports_distance(const std::string &source_airport, const std::string &target_airport);
-    struct CompareDistance{
-        bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2){
-            return n1.second>n2.second;
-        }
-    };
+    // Criteria: minimum distance traveled
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirportsByDistance(const std::string &source_airport, const std::string &target_airport);
 };
 
 #endif //FEUP_AED2_GRAPH_H
