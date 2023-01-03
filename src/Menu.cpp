@@ -144,23 +144,22 @@ void Menu::inputAirports() const {
         }
     }
 
-    std::list<Airport> traveled_airprots = manager.getTraveledAirports(source, target);
+    std::list<std::list<std::pair<Airport,std::string>>> traveled_airprots = manager.getTraveledAirports(source, target);
     utils::clearScreen();
-
 
     std::cout << "--------------------------------------------------------\n";
     std::cout << "|                    Flight Info                       |\n";
     std::cout << "|                                                      |\n";
 
-    for(const Airport &traveled_airport: traveled_airprots) {
-        tmp = "| Airport - " + traveled_airport.getCode() /* + " - " + traveled_airport.getName() */;
+    for(const auto &traveled_airport: *(traveled_airprots.begin())) {
+        tmp = "| Airport - " + traveled_airport.first.getCode() /* + " - " + traveled_airport.getName() */;
         std::cout << tmp;
         for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
         std::cout << "|\n";
     }
     std::cout << "|                                                      |\n";
 
-    ss << "| You traveled by " << traveled_airprots.size() << " airports.";
+    ss << "| You traveled by " << traveled_airprots.begin()->size() << " airports.";
     tmp = ss.str();
     std::cout << tmp;
     for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";

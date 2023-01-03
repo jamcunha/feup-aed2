@@ -2,6 +2,7 @@
 #define FEUP_AED2_GRAPH_H
 
 #include "Airport.h"
+#include "Airline.h"
 
 #include <list>
 #include <set>
@@ -24,8 +25,7 @@ private:
         std::list<Edge> adj; // The list of outgoing edges (to adjacent nodes)
         bool visited; // Verify if the node has been visited on a search
         double src_distance; // Distance to source node (used to find the shortest path to node)
-        std::list<Airport> travel_from_src; // list that stores all airports traveled from source to target in order
-        // maybe could just store the code
+        std::list<std::list<std::pair<Airport,std::string>>> travel_from_src; // list that stores lists of airports and airline taken from source to target
     };
 
     bool has_dir; // false: undirected; true: directed
@@ -61,10 +61,23 @@ public:
     // Get minimum of flights needed to go from a source airport to a target airport
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    // Criteria: minimum number of flights
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+
+    std::string findAirport(double latitude, double longitude);
+
+    std::list<std::string> findAirportByCity(const std::string &city);
+
+    std::list<std::string> findAirports(double latitude, double longitude);
 
     // Get number of kilometers traveled in a straight line from a source airport to a target airport
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
+
+    // Criteria: minimum distance traveled
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirportsByDistance(const std::string &source_airport, const std::string &target_airport);
+
+    // Number of existing flights from an airport
+    int getNumberOfFlights(const std::string &airport_code) const;
 
     // Get all airlines present in an airport
     std::set<std::string> getAirlinesFromAirport(const std::string &airport_code) const;

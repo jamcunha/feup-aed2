@@ -25,9 +25,10 @@ public:
         double longitude
     );
 
+
+    std::string getCity() const;
     std::string getCode() const;
     std::string getName() const;
-    std::string getCity() const;
     std::string getCountry() const;
     double getLatitude() const;
     double getLongitude() const;
@@ -36,3 +37,4 @@ public:
 };
 
 #endif //FEUP_AED2_AIRPORT_H
+
