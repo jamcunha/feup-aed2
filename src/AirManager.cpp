@@ -36,7 +36,7 @@ void AirManager::readData() {
         getline(ss, callsign, ',');
         getline(ss, country, '\r');
 
-        airlines_.insert(Airline(code, name, callsign, country));
+        airlines_.insert({ code, Airline(code, name, callsign, country) });
     }
 
     /* add airports to graph */
@@ -124,4 +124,30 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
     std::string start = airports_->findAirport(start_latitude,start_longitude);
     std::string end = airports_->findAirport(end_latitude,end_longitude);
     return airports_->getTraveledAirports(start,end);
+}
+
+int AirManager::getMinFlights(const std::string &source_airport, const std::string &target_airport) {
+    return airports_->getMinFlights(source_airport, target_airport);
+}
+
+int AirManager::getNumberOfFlights(const std::string &airport_code) const {
+    return airports_->getNumberOfFlights(airport_code);
+}
+
+std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport_code) const {
+    std::set<std::string> airlines_code = airports_->getAirlinesFromAirport(airport_code);
+    std::list<Airline> airlines;
+
+    for(const std::string &it : airlines_code)
+        airlines.push_back(airlines_.find(it)->second);
+
+    return airlines;
+}
+
+std::set<std::string> AirManager::getArrivalCities(const std::string &airport_code) const {
+    return airports_->getArrivalCities(airport_code);
+}
+
+std::set<std::string> AirManager::getArrivalCountries(const std::string &airport_code) const {
+    return airports_->getArrivalCountries(airport_code);
 }

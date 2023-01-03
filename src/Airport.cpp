@@ -18,16 +18,24 @@ std::string Airport::getCode() const {
     return code_;
 }
 
+std::string Airport::getName() const {
+    return name_;
+}
+
+std::string Airport::getCity() const {
+    return city_;
+}
+
+std::string Airport::getCountry() const {
+    return country_;
+}
+
 double Airport::getLatitude() const {
     return latitude_;
 }
 
 double Airport::getLongitude() const {
     return longitude_;
-}
-
-std::string Airport::getCity() const {
-    return city_;
 }
 
 bool Airport::operator==(const Airport &airport) const {

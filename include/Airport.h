@@ -28,9 +28,9 @@ public:
 
     std::string getCity() const;
     std::string getCode() const;
-
+    std::string getName() const;
+    std::string getCountry() const;
     double getLatitude() const;
-
     double getLongitude() const;
 
     bool operator==(const Airport &airport) const;
