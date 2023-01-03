@@ -84,7 +84,7 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirp
 
 }
 
-void AirManager::local_coordenates(){
+void AirManager::localCoordinates(){
     double start_longitude, start_latitude, end_longitude, end_latitude;
     std::cout<<"Insert start's longitude: \n";
     std::cin >> start_longitude;
@@ -124,15 +124,15 @@ void AirManager::local_coordenates(){
 
 
 
-void AirManager::local_city(){
+void AirManager::localCity(){
     std::string start, end;
     std::cout<<"Insert start's city: \n";
     getline(std::cin, start);
     std::cout<<"Insert end's city: \n";
     getline(std::cin, end);
     std::list<std::list<std::pair<Airport,std::string>>> traveled, temp;
-    std::list<std::string> start_airtports = airports_->findAirport_city(start);
-    std::list<std::string> end_airports = airports_->findAirport_city(end);
+    std::list<std::string> start_airtports = airports_->findAirportByCity(start);
+    std::list<std::string> end_airports = airports_->findAirportByCity(end);
     bool flag = true;
     for (auto i : start_airtports){
         for (auto j : end_airports){
@@ -162,7 +162,7 @@ void AirManager::local_city(){
     }
 }
 
-void AirManager::local_coordenates_closest() {
+void AirManager::localCoordinatesClosest() {
     double start_longitude, start_latitude, end_longitude, end_latitude;
     std::cout<<"Insert start's longitude: \n";
     std::cin >> start_longitude;

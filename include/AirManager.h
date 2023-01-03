@@ -30,11 +30,11 @@ public:
 
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
 
-    void local_coordenates();
+    void localCoordinates();
 
-    void local_city();
+    void localCity();
 
-    void local_coordenates_closest();
+    void localCoordinatesClosest();
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H
