@@ -23,9 +23,15 @@ public:
 
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
-    int getMinFlights(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
 
-    std::list<Airport> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(std::string start, std::string end);
+
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
+
+    int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
     int getNumberOfFlights(const std::string &airport_code) const;
 
