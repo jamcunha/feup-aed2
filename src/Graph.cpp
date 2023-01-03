@@ -157,7 +157,6 @@ double Graph::getShortestPath(const std::string &source_airport, const std::stri
     return nodes.at(target_airport).src_distance;
 }
 
-<<<<<<< HEAD
 std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirportsByDistance(const std::string &source_airport, const std::string &target_airport) {
     shortestPath(source_airport);
     return nodes[target_airport].travel_from_src;

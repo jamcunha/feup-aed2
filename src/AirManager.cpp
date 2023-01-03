@@ -98,6 +98,8 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
             }
         }
     }
+
+    return traveled;
 }
 
 std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCity(std::string start, std::string end){
