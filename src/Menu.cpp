@@ -144,34 +144,70 @@ void Menu::inputAirports() const {
         }
     }
 
-    std::list<std::list<std::pair<Airport,std::string>>> traveled_airprots = manager.getTraveledAirports(source, target);
-    utils::clearScreen();
+    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target);
+    int page = 1;
+    auto path = traveled_airports.begin();
+    while(true) {
+        utils::clearScreen();
 
-    std::cout << "--------------------------------------------------------\n";
-    std::cout << "|                    Flight Info                       |\n";
-    std::cout << "|                                                      |\n";
+        std::cout << "--------------------------------------------------------\n";
+        std::cout << "|                    Flight Info                       |\n";
+        std::cout << "|                                                      |\n";
 
-    for(const auto &traveled_airport: *(traveled_airprots.begin())) {
-        tmp = "| Airport - " + traveled_airport.first.getCode() /* + " - " + traveled_airport.getName() */;
+        for(const auto &traveled_airport: *path) {
+            tmp = "| Airport - " + traveled_airport.first.getCode() /* + " - " + traveled_airport.getName() */;
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+        }
+        std::cout << "|                                                      |\n";
+
+        ss.str("");
+        ss << "| You traveled by " << path->size() << " airports.";
+        tmp = ss.str();
         std::cout << tmp;
         for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
         std::cout << "|\n";
+        std::cout << "|                                                      |\n";
+
+        ss.str("");
+        ss << "| Page " << page << "/" << traveled_airports.size();
+        tmp = ss.str();
+        std::cout << tmp;
+        for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+        std::cout << "|\n";
+        std::cout << "--------------------------------------------------------\n";
+
+        std::cout << "\nPress n(ext)/p(rev)/e(xit): ";
+
+        char opt;
+        while(true) {
+            std::cin >> opt;
+            if(opt == 'n') {
+                page++;
+                if(page > traveled_airports.size()) {
+                    page = 1;
+                    path = traveled_airports.begin();
+                }
+                else
+                    ++path;
+                break;
+            } else if(opt == 'p') {
+                page--;
+                if(page < 1) {
+                    page = traveled_airports.size();
+                    path = traveled_airports.end();
+                    --path;
+                }
+                else
+                    --path;
+                break;
+            }
+            else if(opt == 'e') {
+                return;
+            }
+        }
     }
-    std::cout << "|                                                      |\n";
-
-    ss << "| You traveled by " << traveled_airprots.begin()->size() << " airports.";
-    tmp = ss.str();
-    std::cout << tmp;
-    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
-    std::cout << "|\n";
-    std::cout << "--------------------------------------------------------\n";
-
-    std::cout << "\nPress <Enter> to go to main menu...";
-
-    /* wait for enter to be pressed */
-    std::cin.ignore(); // ignore characters in buffer
-    while(std::cin.get() != '\n')
-        continue;
 }
 
 void Menu::airportInfo() {
