@@ -144,7 +144,7 @@ Airport Graph::getAirport(const std::string &airport_code) const {
 
 int Graph::getMinFlights(const std::string &source_airport, const std::string &target_airport) {
     bfs(source_airport);
-    return nodes[target_airport].travel_from_src.size() - 1;
+    return nodes[target_airport].travel_from_src.front().size() - 1;
 }
 
 std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) {
@@ -214,7 +214,7 @@ std::list<Airport> Graph::getAirportsReached(const std::string &source_airport, 
         const Node &node = n.second;
         if(node.airport.getCode() == source_airport)
             continue;
-        if(node.travel_from_src.size() - 1 <= k)
+        if(node.travel_from_src.front().size() - 1 <= k)
             airports.push_back(node.airport);
     }
 
@@ -229,7 +229,7 @@ std::set<std::string> Graph::getCitiesReached(const std::string &source_airport,
         const Node &node = n.second;
         if(node.airport.getCode() == source_airport)
             continue;
-        if(node.travel_from_src.size() - 1 <= k)
+        if(node.travel_from_src.front().size() - 1 <= k)
             cities.insert(node.airport.getCity());
     }
 
@@ -244,7 +244,7 @@ std::set<std::string> Graph::getCountriesReached(const std::string &source_airpo
         const Node &node = n.second;
         if(node.airport.getCode() == source_airport)
             continue;
-        if(node.travel_from_src.size() - 1 <= k)
+        if(node.travel_from_src.front().size() - 1 <= k)
             countries.insert(node.airport.getCountry());
     }
 
