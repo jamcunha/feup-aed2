@@ -37,6 +37,12 @@ public:
     void reachableCountriesInFlights(const std::string &airport_code, int nr_flights);
 
     void settings();
+
+    void input_city() const;
+
+    void pages(std::list<std::list<std::pair<Airport, std::string>>> traveled_airports) const;
+
+    void input_coordenates(int option) const;
 };
 
 #endif //FEUP_AED2_MENU_H

@@ -279,6 +279,7 @@ bool Graph::checkIfAirportExists(const std::string &airport_code) const {
     return nodes.find(airport_code) != nodes.end();
 }
 
+
 void Graph::addWantedAirline(const std::string &airline_code) {
     wanted_airlines.insert(airline_code);
 }
