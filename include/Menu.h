@@ -16,7 +16,7 @@ public:
 
     void init();
 
-    void inputAirports() const;
+    void inputFlights() const;
 
     void airportInfo();
 
@@ -38,11 +38,13 @@ public:
 
     void settings();
 
-    void input_city() const;
+    void inputCity() const;
 
-    void pages(std::list<std::list<std::pair<Airport, std::string>>> traveled_airports) const;
+    void pages(const std::list<std::list<std::pair<Airport, std::string>>> &traveled_airports) const;
 
-    void input_coordenates(int option) const;
+    void inputCoordinates(bool option) const;
+
+    void inputAirport() const;
 };
 
 #endif //FEUP_AED2_MENU_H

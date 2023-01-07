@@ -29,7 +29,7 @@ void Menu::init() {
 
         switch(opt) {
             case '1':
-                inputAirports();
+                inputFlights();
                 break;
             case '2':
                 airportInfo();
@@ -44,37 +44,41 @@ void Menu::init() {
     }
 }
 
-void Menu::inputAirports() const {
+void Menu::inputFlights() const {
     while(true) {
         utils::clearScreen();
         std::cout << "--------------------------------------------------------\n";
         std::cout << "|           How do you pretend to search?              |\n";
         std::cout << "|                                                      |\n";
-        std::cout << "| 1 - City                                             |\n";
-        std::cout << "| 2 - Coordenates                                      |\n";
-        std::cout << "| 3 - Coordenates (closest airport)                    |\n";
+        std::cout << "| 1 - Airport Code                                     |\n";
+        std::cout << "| 2 - City                                             |\n";
+        std::cout << "| 3 - Coordenates                                      |\n";
+        std::cout << "| 4 - Coordenates (closest airport)                    |\n";
         std::cout << "|                                                      |\n";
-        std::cout << "| 0 - Exit                                             |\n";
+        std::cout << "| 0 - Return to Main Menu                              |\n";
         std::cout << "--------------------------------------------------------\n";
 
         char opt;
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '3' && opt >= '0')
+            if(opt <= '4' && opt >= '0')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
 
         switch(opt) {
             case '1':
-                input_city();
+                inputAirport();
                 break;
             case '2':
-                input_coordenates(2);
+                inputCity();
                 break;
             case '3':
-                input_coordenates(3);
+                inputCoordinates(true);
+                break;
+            case '4':
+                inputCoordinates(false);
                 break;
             default:
                 utils::clearScreen();
@@ -83,19 +87,119 @@ void Menu::inputAirports() const {
     }
 }
 
+void Menu::inputAirport() const {
+    std::string source, target, tmp;
+    std::stringstream ss;
+    Airport airport;
+    char opt;
 
+    utils::clearScreen();
+    while(true) {
+        std::cout << "Please enter source airport code: ";
+        std::cin >> source;
 
+        if(manager.checkIfAirportExists(source)) {
+            airport = manager.getAirport(source);
+            std::cout << '\n';
 
-void Menu::input_city() const {
+            std::cout << "--------------------------------------------------------\n";
+            std::cout << "|                    Airport Info                      |\n";
+
+            /* extract to a function to avoid code duplication */
+            tmp = "| Code: " + airport.getCode();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Name : " + airport.getName();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| City : " + airport.getCity();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Country : " + airport.getCountry();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+            std::cout << "--------------------------------------------------------\n";
+
+            std::cout << "\nConfirm [y/n/e(xit)]: ";
+            std::cin >> opt;
+            if(opt == 'y')
+                break;
+            else if(opt == 'e')
+                return;
+
+            utils::clearScreen();
+        } else {
+            std::cout << "Airport doesn't exists\n\n";
+        }
+    }
+
+    utils::clearScreen();
+    while(true) {
+        std::cout << "Please enter target airport code: ";
+        std::cin >> target;
+
+        if(manager.checkIfAirportExists(target)) {
+            airport = manager.getAirport(target);
+            std::cout << '\n';
+
+            std::cout << "--------------------------------------------------------\n";
+            std::cout << "|                    Airport Info                      |\n";
+
+            /* extract to a function to avoid code duplication */
+            tmp = "| Code: " + airport.getCode();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Name : " + airport.getName();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| City : " + airport.getCity();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+
+            tmp = "| Country : " + airport.getCountry();
+            std::cout << tmp;
+            for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+            std::cout << "|\n";
+            std::cout << "--------------------------------------------------------\n";
+
+            std::cout << "\nConfirm [y/n/e(xit)]: ";
+            std::cin >> opt;
+            if(opt == 'y')
+                break;
+            else if(opt == 'e')
+                return;
+
+            utils::clearScreen();
+        } else {
+            std::cout << "Airport doesn't exists\n\n";
+        }
+    }
+
+    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target);
+    pages(traveled_airports);
+}
+
+void Menu::inputCity() const {
     std::string source, target;
     Airport airport;
     char opt;
     utils::clearScreen();
-    while (true) {
+    while(true) {
         std::cout << "Please enter the source city: ";
         std::cin.ignore();
         getline(std::cin,source);
-        std::cout << "You entered " << source;
         std::cout << "\nConfirm [y/n/e(xit)]: ";
         std::cin >> opt;
         if(opt == 'y')
@@ -109,7 +213,6 @@ void Menu::input_city() const {
         std::cout << "Please enter the target city: ";
         std::cin.ignore();
         getline(std::cin,target);
-        std::cout << "You entered " << target;
         std::cout << "\nConfirm [y/n/e(xit)]: ";
         std::cin >> opt;
         if(opt == 'y')
@@ -122,7 +225,7 @@ void Menu::input_city() const {
     pages(traveled_airports);
 }
 
-void Menu::input_coordenates(int option) const {
+void Menu::inputCoordinates(bool option) const {
     int source_latitude, source_longitude, target_latitude, target_longitude;
     std::stringstream ss;
     Airport airport;
@@ -132,10 +235,9 @@ void Menu::input_coordenates(int option) const {
     while (true) {
         std::cout << "Please enter the source latitude: ";
         std::cin >> source_latitude;
-        std::cout << "Please enter the source longitude: ";
+        std::cout << "\nPlease enter the source longitude: ";
         std::cin >> source_longitude;
-        std::cout << "You entered " << source_latitude << ", " << source_longitude;
-        std::cout << "\nConfirm [y/n/e(xit)]: ";
+        std::cout << "\n\nConfirm [y/n/e(xit)]: ";
         std::cin >> opt;
         if(opt == 'y')
             break;
@@ -144,13 +246,12 @@ void Menu::input_coordenates(int option) const {
         utils::clearScreen();
     }
     utils::clearScreen();
-    while (true) {
+    while(true) {
         std::cout << "Please enter the target latitude: ";
         std::cin >> target_latitude;
-        std::cout << "Please enter the target longitude: ";
+        std::cout << "\nPlease enter the target longitude: ";
         std::cin >> target_longitude;
-        std::cout << "You entered " << target_latitude << ", " << target_longitude;
-        std::cout << "\nConfirm [y/n/e(xit)]: ";
+        std::cout << "\n\nConfirm [y/n/e(xit)]: ";
         std::cin >> opt;
         if(opt == 'y')
             break;
@@ -159,7 +260,7 @@ void Menu::input_coordenates(int option) const {
         utils::clearScreen();
     }
     std::list<std::list<std::pair<Airport, std::string>>> traveled_airports;
-    if (option==2){
+    if(option) {
         traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude);
     }
     else
@@ -167,24 +268,28 @@ void Menu::input_coordenates(int option) const {
     pages(traveled_airports);
 }
 
-void Menu::pages(std::list<std::list<std::pair<Airport, std::string>>> traveled_airports) const {
-    if (traveled_airports.empty()){
-        std::cout<<"There is no way to travel!\n";
-        utils::clearScreen();
+void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &traveled_airports) const {
+    if (traveled_airports.empty()) {
+        std::cout << "There is no way to travel!\n";
+        std::cout << "\nPress <Enter> to go to search menu...";
+        /* wait for enter to be pressed */
+        std::cin.ignore(); // ignore characters in buffer
+        while(std::cin.get() != '\n')
+            continue;
         return;
     }
     int page = 1;
     std::string tmp;
     std::stringstream ss;
     auto path = traveled_airports.begin();
-    while (true) {
+    while(true) {
         utils::clearScreen();
 
         std::cout << "--------------------------------------------------------\n";
         std::cout << "|                    Flight Info                       |\n";
         std::cout << "|                                                      |\n";
 
-        for (const auto &traveled_airport: *path) {
+        for(const auto &traveled_airport: *path) {
             tmp = "| Airport - " + traveled_airport.first.getCode() /* + " - " + traveled_airport.getName() */;
             std::cout << tmp;
             for (int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
@@ -225,8 +330,7 @@ void Menu::pages(std::list<std::list<std::pair<Airport, std::string>>> traveled_
                 page--;
                 if (page < 1) {
                     page = traveled_airports.size();
-                    path = traveled_airports.end();
-                    --path;
+                    path = traveled_airports.end(); --path;
                 } else
                     --path;
                 break;
