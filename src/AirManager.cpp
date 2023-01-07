@@ -26,26 +26,26 @@ void AirManager::readData() {
     getline(flights_input, line);
 
     /* store airlines */
-    while(getline(airlines_input, line)) {
+    while(getline(airlines_input, line)) {//n^2
         std::stringstream ss(line);
 
         std::string code, name, callsign, country;
 
-        getline(ss, code, ',');
+        getline(ss, code, ',');//n
         getline(ss, name, ',');
         getline(ss, callsign, ',');
         getline(ss, country, '\r');
 
-        airlines_.insert({ code, Airline(code, name, callsign, country) });
+        airlines_.insert({ code, Airline(code, name, callsign, country) });//n
     }
 
     /* add airports to graph */
-    while(getline(airports_input, line)) {
+    while(getline(airports_input, line)) {//n^2
         std::stringstream ss(line);
         
         std::string code, name, city, country, latitude_string, longitude_string;
 
-        getline(ss, code, ',');
+        getline(ss, code, ',');//n
         getline(ss, name, ',');
         getline(ss, city, ',');
         getline(ss, country, ',');
@@ -55,9 +55,9 @@ void AirManager::readData() {
         double latitude = std::stod(latitude_string);
         double longitude = std::stod(longitude_string);
 
-        cities_.insert(city);
+        cities_.insert(city);//1
 
-        airports_->addNode(code, Airport(code, name, city, country, latitude, longitude));
+        airports_->addNode(code, Airport(code, name, city, country, latitude, longitude));//n
     }
 
     /* add flights to airports */
@@ -86,12 +86,12 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirp
 
 std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude){
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
-    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
-    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
+    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);//v log n
+    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);//v log n
     bool flag = true;
-    for (auto i : start_airtports){
-        for (auto j : end_airports){
-            temp = airports_->getTraveledAirports(i,j);
+    for (auto i : start_airtports){//n
+        for (auto j : end_airports){//n
+            temp = airports_->getTraveledAirports(i,j);//|V| + |E|
             if (temp.size()<=traveled.size() || flag) {
                 traveled=temp;
                 flag=false;
@@ -124,8 +124,8 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCity(std:
 
 std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude) {
     std::string start = airports_->findAirport(start_latitude,start_longitude);
-    std::string end = airports_->findAirport(end_latitude,end_longitude);
-    return airports_->getTraveledAirports(start,end);
+    std::string end = airports_->findAirport(end_latitude,end_longitude);//v log n
+    return airports_->getTraveledAirports(start,end); //V+E
 }
 
 int AirManager::getMinFlights(const std::string &source_airport, const std::string &target_airport) {
@@ -137,11 +137,11 @@ int AirManager::getNumberOfFlights(const std::string &airport_code) const {
 }
 
 std::list<Airline> AirManager::getAirlinesFromAirport(const std::string &airport_code) const {
-    std::set<std::string> airlines_code = airports_->getAirlinesFromAirport(airport_code);
+    std::set<std::string> airlines_code = airports_->getAirlinesFromAirport(airport_code);//|E| log(|V|)
     std::list<Airline> airlines;
 
-    for(const std::string &it : airlines_code)
-        airlines.push_back(airlines_.find(it)->second);
+    for(const std::string &it : airlines_code)//n
+        airlines.push_back(airlines_.find(it)->second);//log n
 
     return airlines;
 }

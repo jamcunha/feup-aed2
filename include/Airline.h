@@ -4,7 +4,7 @@
 #include <string>
 
 /**
- * @brief Represents a new Airline.
+ * @brief Represents a Airline.
  */
 class Airline {
 private:
@@ -23,7 +23,7 @@ private:
      */
     std::string callsign_;
     /**
-     * @brief Country of origin, where the country was funded.
+     * @brief Country of origin, where the airline was funded.
      */
     std::string country_;
 
@@ -31,6 +31,7 @@ public:
     //"Constructers"
     /**
      * @brief Create a new Airline.
+     * @details Constructor of the Airline class.
      * @param code Internal code(IBE,SWE,RYR,ect.)
      * @param name Name of the new Airline
      * @param callsign Call-sign of the new Airline.

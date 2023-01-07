@@ -55,7 +55,7 @@ void Graph::shortestPath(const std::string &airport_code) {
 }
 
 void Graph::addNode(const std::string &airport_code, const Airport &airport) {
-    nodes.insert({ airport_code, { airport, {}, false, INF, std::list<std::list<std::pair<Airport,std::string>>>() } });
+    nodes.insert({ airport_code, { airport, {}, false, INF, std::list<std::list<std::pair<Airport,std::string>>>() } });//n
 }
 
 void Graph::addEdge(const std::string& source_airport, const std::string& target_airport, const std::string& airline) {
@@ -139,7 +139,7 @@ void Graph::bfs(const std::string &airport_code) {
 }
 
 Airport Graph::getAirport(const std::string &airport_code) const {
-    return nodes.at(airport_code).airport;
+    return nodes.at(airport_code).airport;//n
 }
 
 int Graph::getMinFlights(const std::string &source_airport, const std::string &target_airport) {
@@ -165,11 +165,11 @@ std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirportsB
 std::string Graph::findAirport(double latitude, double longitude){
     std::string code;
     double latitude_min=MAXFLOAT, longitude_min=MAXFLOAT;
-    for (auto node: nodes) {
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<utils::haversine(latitude,latitude_min,longitude,longitude_min)) {
-            code = node.second.airport.getCode();
-            latitude_min=node.second.airport.getLatitude();
-            longitude_min=node.second.airport.getLongitude();
+    for (auto node: nodes) {//V
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<utils::haversine(latitude,latitude_min,longitude,longitude_min)) {//log(n)
+            code = node.second.airport.getCode();//1
+            latitude_min=node.second.airport.getLatitude();//1
+            longitude_min=node.second.airport.getLongitude();//1
         }
     }
     return code;
@@ -177,9 +177,9 @@ std::string Graph::findAirport(double latitude, double longitude){
 
 std::list<std::string> Graph::findAirports(double latitude, double longitude){
     std::list<std::string> airports ;
-    for (auto node: nodes) {
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100) {
-            airports.push_back(node.first);
+    for (auto node: nodes) {//n
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100) {//log(n)
+            airports.push_back(node.first);//1
         }
     }
     return airports;
@@ -187,9 +187,9 @@ std::list<std::string> Graph::findAirports(double latitude, double longitude){
 
 std::list<std::string> Graph::findAirportByCity(const std::string &city) {
     std::list<std::string> airports;
-    for (auto node:nodes) {
+    for (auto node:nodes) {//n
         if(node.second.airport.getCity() == city)
-            airports.push_back(node.first);
+            airports.push_back(node.first);//1
     }
     return airports;
 }
@@ -200,8 +200,8 @@ int Graph::getNumberOfFlights(const std::string &airport_code) const {
 
 std::set<std::string> Graph::getAirlinesFromAirport(const std::string &airport_code) const {
     std::set<std::string> airlines;
-    for(auto &a: nodes.at(airport_code).adj)
-        airlines.insert(a.airline);
+    for(auto &a: nodes.at(airport_code).adj)//n
+        airlines.insert(a.airline);//log(n)
 
     return airlines;
 }
@@ -253,16 +253,16 @@ std::set<std::string> Graph::getCountriesReached(const std::string &source_airpo
 
 std::set<std::string> Graph::getArrivalCities(const std::string &airport_code) const {
     std::set<std::string> cities;
-    for(const Edge &edge: nodes.at(airport_code).adj)
-        cities.insert(nodes.at(edge.dest).airport.getCity());
+    for(const Edge &edge: nodes.at(airport_code).adj)//n
+        cities.insert(nodes.at(edge.dest).airport.getCity());//n
 
     return cities;
 }
 
 std::set<std::string> Graph::getArrivalCountries(const std::string &airport_code) const {
     std::set<std::string> countries;
-    for(const Edge &edge: nodes.at(airport_code).adj)
-        countries.insert(nodes.at(edge.dest).airport.getCountry());
+    for(const Edge &edge: nodes.at(airport_code).adj)//n
+        countries.insert(nodes.at(edge.dest).airport.getCountry());//n
 
     return countries;
 }
