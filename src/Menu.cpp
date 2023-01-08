@@ -290,6 +290,13 @@ void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &tr
         std::cout << "|                                                      |\n";
 
         for(const auto &traveled_airport: *path) {
+            if(traveled_airport.second != "") {
+                tmp = "| (" + traveled_airport.second + ")";
+                std::cout << tmp;
+                for (int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+                std::cout << "|\n";
+            }
+
             tmp = "| Airport - " + traveled_airport.first.getCode() /* + " - " + traveled_airport.getName() */;
             std::cout << tmp;
             for (int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
