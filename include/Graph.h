@@ -3,6 +3,7 @@
 
 #include "Airport.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -119,7 +120,7 @@ public:
 
     int Diameter();
 
-    std::set<std::pair<std::string,int>,CompareDistance> top_flights(int k);
+    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
 
 };
 

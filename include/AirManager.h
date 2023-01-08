@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -75,7 +76,7 @@ public:
 
     int diameter() const;
 
-    std::set<std::pair<std::string,int>,CompareDistance> top_flights(int k) const;
+    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

@@ -1,17 +1,10 @@
 #include "../include/Graph.h"
-#include "../include/Utils.h"
 
 #include <iostream>
 #include <queue>
 
 Graph::Graph(bool dir): has_dir(dir) {}
 
-// used in priority queue used in dijkstra algorithm
-struct CompareDistance {
-    bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2) {
-        return n1.second>n2.second;
-    }
-};
 
 int Graph::size_Nodes(){
     return nodes.size();
@@ -25,8 +18,8 @@ int Graph::size_Flights(){
     return count;
 }
 
-std::set<std::pair<std::string,int>,CompareDistance> Graph::top_flights(int k){
-    std::set<std::pair<std::string,int>,CompareDistance> flights;
+std::set<std::pair<std::string,int>,utils::CompareDistance> Graph::top_flights(int k){
+    std::set<std::pair<std::string,int>, utils::CompareDistance> flights;
     for (int i=0; i<=k;i++){
         flights.insert({"",0});
     }
@@ -83,7 +76,7 @@ void Graph::bfs_diameter(const std::string &airport_code) {
 }
 
 void Graph::shortestPath(const std::string &airport_code) {
-    std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, CompareDistance> q;
+    std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, utils::CompareDistance> q;
 
     setUnvisited();
     nodes[airport_code].src_distance = 0;
