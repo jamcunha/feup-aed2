@@ -14,6 +14,7 @@ private:
     Graph* airports_;
     std::unordered_map<std::string, Airline> airlines_;
     std::unordered_set<std::string> cities_;
+    bool how_to_fly;
 
     void readData();
 
@@ -66,6 +67,9 @@ public:
     std::unordered_set<std::string> getWantedAirlines() const;
 
     std::list<std::string> findAirportByCity(const std::string &city) const;
+
+    bool getHowToFly() const;
+    void changeHowToFly();
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

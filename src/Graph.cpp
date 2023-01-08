@@ -45,6 +45,16 @@ void Graph::shortestPath(const std::string &airport_code) {
                 q.push({ e.dest, alt });
             }
             else if (alt<INF && alt == v.src_distance ){
+                bool flag = true;
+                for (auto n : v.travel_from_src) { //if all possibilities wanted comment this for loop
+                    auto it = n.end();
+                    std::advance(it,-2);
+                    if (it->first==node.airport) {
+                        flag= false;
+                        break;
+                    }
+                }
+                if (!flag) continue;
                 for(auto n : node.travel_from_src) {
                     n.push_back({v.airport,e.airline});
                     v.travel_from_src.push_back(n);
@@ -120,7 +130,7 @@ void Graph::bfs(const std::string &airport_code) {
             }
             else if (node.travel_from_src.front().size()+1==nodes[w].travel_from_src.front().size()){
                 bool flag = true;
-                for (auto n : nodes[w].travel_from_src) {
+                for (auto n : nodes[w].travel_from_src) { //if all possibilities wanted comment this for loop
                     auto it = n.end();
                     std::advance(it,-2);
                     if (it->first==node.airport) {
@@ -153,7 +163,6 @@ std::list<std::list<std::pair<Airport,std::string>>> Graph::getTraveledAirports(
 }
 
 double Graph::getShortestPath(const std::string &source_airport, const std::string &target_airport) {
-    shortestPath(source_airport);
     return nodes.at(target_airport).src_distance;
 }
 

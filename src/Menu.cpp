@@ -226,7 +226,7 @@ void Menu::inputCity() const {
 }
 
 void Menu::inputCoordinates(bool option) const {
-    int source_latitude, source_longitude, target_latitude, target_longitude;
+    double source_latitude, source_longitude, target_latitude, target_longitude;
     std::stringstream ss;
     Airport airport;
     std::list<std::string> source, target;
@@ -718,6 +718,7 @@ void Menu::settings() {
         std::cout << "| 2 - Remove wanted airline                            |\n";
         std::cout << "| 3 - Clear wanted airlines                            |\n";
         std::cout << "| 4 - List wanted airlines                             |\n";
+        std::cout << "| 5 - Nr Flights/Distance [" << (manager.getHowToFly() ? "Nr Flights]" : "Distance]  ") << "                 |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
@@ -726,7 +727,7 @@ void Menu::settings() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '4' && opt >= '0')
+            if(opt <= '5' && opt >= '0')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -882,6 +883,9 @@ void Menu::settings() {
                 while(std::cin.get() != '\n')
                     continue;
 
+                break;
+            case '5':
+                manager.changeHowToFly();
                 break;
             default:
                 utils::clearScreen();
