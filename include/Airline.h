@@ -11,6 +11,7 @@ private:
     std::string country_;
 
 public:
+    Airline() {};
     Airline(std::string code, std::string name, std::string callsign, std::string country);
 
     std::string getCode() const;
