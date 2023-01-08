@@ -45,6 +45,9 @@ public:
      * @details Deletion of the current airports and flights Graph.
      */
     ~AirManager();
+    Airport getAirport(const std::string &airport_code) const;
+    
+    Airline getAirline(const std::string &airline_code) const;
     /**
      * @brief Gets the distance in kilometers between 2 airports.
      * @details Time Complexity- O(|E| log(|V|)).
@@ -53,7 +56,6 @@ public:
      * @param target_airport Target airport's code.
      * @return Number of kilometers traveled in a straight line between two airports.
      */
-    //"Getters"
     double getDistance(const std::string &source_airport, const std::string &target_airport);
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport.
@@ -63,7 +65,7 @@ public:
      * @param target_airport Target airport's code.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport);
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using local GPS coordinates as a reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -74,7 +76,7 @@ public:
      * @param end_latitude Target airport's latitude.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using both the host cities as reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -83,7 +85,7 @@ public:
      * @param end Target airport's city.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCity(std::string start, std::string end);
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using inputted GPS coordinates as reference.
      * @details Because inputting coordinates can be too exact, this function helps the user finding the closest airports to both coordinates.
@@ -94,7 +96,8 @@ public:
      * @param end_latitude Latitude selected by the client.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+
     /**
      * Gets the minimum of flights needed to go from a source airport to a said target airport.
      * @details Time Complexity - O(|V| + |E|).
@@ -126,6 +129,15 @@ public:
      * @param airport_code Airport's code.
      * @return List of cities reachable within 1 flight.
      */
+    std::list<Airport> getAirportsReached(const std::string &source_airport, int k);
+
+    std::set<std::string> getCitiesReached(const std::string &source_airport, int k);
+
+    std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+
+    std::set<std::string> getArrivalAirport(const std::string &airport_code) const;
+
+
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;
     /**
      * @brief Gets all countries that can be reached with 1 flight from a source airport.
@@ -135,6 +147,20 @@ public:
      * @return List of countries reachable within 1 flight.
      */
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
+
+    bool checkIfAirportExists(const std::string &airport_code) const;
+
+    bool checkIfAirlineExists(const std::string &airline_code) const;
+
+    bool addWantedAirline(const std::string &airline_code);
+
+    bool removeWantedAirline(const std::string &airline_code);
+
+    void clearWantedAirline();
+
+    std::unordered_set<std::string> getWantedAirlines() const;
+
+    std::list<std::string> findAirportByCity(const std::string &city) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

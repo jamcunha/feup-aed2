@@ -241,6 +241,9 @@ public:
      * @return List of countries reachable within a "k" number of flights.
      */
     std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+
+    // Get airports that can be reached with 1 flight from a source airport
+    std::set<std::string> getArrivalAirports(const std::string &airport_code) const;
     /**
      * @brief Gets all cities that can be reached with 1 flight from a source airport.
      * @details Time Complexity- O(|E| log(|V|)).
@@ -257,6 +260,17 @@ public:
      * @return List of countries reachable within 1 flight.
      */
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
+
+    // Check if airport exists in nodes hash table
+    bool checkIfAirportExists(const std::string &airport_code) const;
+
+    void addWantedAirline(const std::string &airline_code);
+
+    bool removeWantedAirline(const std::string &airline_code);
+
+    void clearWantedAirline();
+
+    std::unordered_set<std::string> getWantedAirlines() const;
 };
 
 #endif //FEUP_AED2_GRAPH_H

@@ -6,7 +6,9 @@
 #define FEUP_AED2_UTILS_H
 
 #include "Airport.h"
+
 #include <cmath>
+#include <iostream>
 
 namespace utils {
     /**
@@ -33,6 +35,8 @@ namespace utils {
      * @return Distance between the airports in Kilometers.
      */
     double haversine(Airport &source, Airport &target);
+
+    void clearScreen();
 }
 
 #endif //FEUP_AED2_UTILS_H

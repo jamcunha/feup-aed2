@@ -18,3 +18,7 @@ double utils::haversine(Airport &source, Airport &target) {
     return haversine(source.getLatitude(), target.getLatitude(), source.getLongitude(), target.getLongitude());
 }
 
+void utils::clearScreen() {
+    std::cout << "\033[2J\033[1;1H";
+}
+

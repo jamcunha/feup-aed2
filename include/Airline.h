@@ -37,6 +37,7 @@ public:
      * @param callsign Call-sign of the new Airline.
      * @param country Country where the new Ailrine was funded.
      */
+    Airline() {};
     Airline(std::string code, std::string name, std::string callsign, std::string country);
     //"Getter"
     /**
