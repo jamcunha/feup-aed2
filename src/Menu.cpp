@@ -370,7 +370,7 @@ void Menu::globalInfo() {
     std::cout << "\nNumber of Airlines: " << manager.size_airlines();
     std::cout << "\nNumber of Flights: " << manager.size_flights();
     std::cout << "\nDiameter: " << manager.diameter();
-    std::cout << "\nTop "<<k<<" Aiports with most flights:\n";
+    std::cout << "\n\nTop "<<k<<" Aiports with most flights:\n";
     for (auto i : manager.top_flights(k))
         std::cout<<i.first<<" -> "<<i.second<<"\n";
 
