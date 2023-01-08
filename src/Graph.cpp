@@ -13,6 +13,75 @@ struct CompareDistance {
     }
 };
 
+int Graph::size_Nodes(){
+    return nodes.size();
+}
+
+int Graph::size_Flights(){
+    int count;
+    for (auto const &n : nodes){
+        count+=n.second.adj.size();
+    }
+    return count;
+}
+
+std::set<std::pair<std::string,int>,CompareDistance> Graph::top_flights(int k){
+    std::set<std::pair<std::string,int>,CompareDistance> flights;
+    for (int i=0; i<=k;i++){
+        flights.insert({"",0});
+    }
+    for (auto const &n:nodes) {
+        for (auto &p: flights) {
+            if (p.second < n.second.adj.size()) {
+                flights.insert({n.first, n.second.adj.size()});
+                break;
+            }
+        }
+        while (flights.size()>k)
+            flights.erase(flights.end());
+    }
+    return flights;
+}
+
+int Graph::Diameter(){
+    int size=0;
+    for (auto const &n:nodes){
+        bfs_diameter(n.first);
+        for (auto &i:nodes){
+            if (i.second.visited){
+                i.second.visited = false;
+                if (i.second.travel_from_src.front().size()-1>size)
+                    size=i.second.travel_from_src.front().size()-1;
+            }
+        }
+    }
+    return size;
+}
+void Graph::bfs_diameter(const std::string &airport_code) {
+    setUnvisited();
+
+    std::queue<std::string> q; // queue of unvisited nodes
+    q.push(airport_code);
+    nodes[airport_code].visited = true;
+    nodes[airport_code].travel_from_src.push_back({ { nodes[airport_code].airport, "" } });
+    while(!q.empty()) {
+        std::string u = q.front(); q.pop();
+
+        Node& node = nodes[u];
+        // std::cout << node.airport.getCode() << '\n';
+
+        for(const auto &e: node.adj) {
+            std::string w = e.dest;
+            if(!nodes[w].visited) {
+                q.push(w);
+                nodes[w].visited = true;
+                nodes[w].travel_from_src=node.travel_from_src;
+                nodes[w].travel_from_src.front().push_back({nodes[w].airport, e.airline});
+            }
+        }
+    }
+}
+
 void Graph::shortestPath(const std::string &airport_code) {
     std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, CompareDistance> q;
 

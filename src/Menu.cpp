@@ -13,6 +13,7 @@ void Menu::init() {
         std::cout << "|                                                      |\n";
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
+        std::cout << "| 3 - Global Information                               |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 9 - Settings                                         |\n";
         std::cout << "| 0 - Exit                                             |\n";
@@ -22,7 +23,7 @@ void Menu::init() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '2' && opt >= '0' || opt == '9')
+            if(opt <= '3' && opt >= '0' || opt == '9')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -33,6 +34,9 @@ void Menu::init() {
                 break;
             case '2':
                 airportInfo();
+                break;
+            case '3':
+                globalInfo();
                 break;
             case '9':
                 settings();
@@ -347,6 +351,17 @@ void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &tr
         }
     }
 }
+
+void Menu::globalInfo(){
+    std::cout<<"\nNumber of Aiports: "<<manager.size_aiports();
+    std::cout<<"\nNumber of Airlines: "<<manager.size_airlines();
+    std::cout<<"\nNumber of Flights: "<<manager.size_flights();
+    std::cout<<"\nDiameter: "<<manager.diameter();
+    std::cout<<"\nTop 10 flights: ";
+    for (auto i : manager.top_flights(10))
+        std::cout<<i.first<<i.second;
+}
+
 
 void Menu::airportInfo() {
     std::string airport_code;

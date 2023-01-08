@@ -66,6 +66,16 @@ public:
     std::unordered_set<std::string> getWantedAirlines() const;
 
     std::list<std::string> findAirportByCity(const std::string &city) const;
+
+    int size_aiports() const;
+
+    int size_airlines() const;
+
+    int size_flights() const;
+
+    int diameter() const;
+
+    std::set<std::pair<std::string,int>,CompareDistance> top_flights(int k) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

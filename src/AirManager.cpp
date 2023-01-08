@@ -13,6 +13,22 @@ AirManager::~AirManager() {
     delete airports_;
 }
 
+int AirManager::size_aiports() const{
+    return airports_->size_Nodes();
+}
+
+int AirManager::size_airlines() const{
+    return airlines_.size();
+}
+
+int AirManager::size_flights() const{
+    return airports_->size_Flights();
+}
+
+int AirManager::diameter() const{
+    return airports_->Diameter();
+}
+
 Airport AirManager::getAirport(const std::string &airport_code) const {
     return airports_->getAirport(airport_code);
 }
@@ -20,6 +36,11 @@ Airport AirManager::getAirport(const std::string &airport_code) const {
 Airline AirManager::getAirline(const std::string &airline_code) const {
     return airlines_.at(airline_code);
 }
+
+std::set<std::pair<std::string, int>> AirManager::top_flights(int k) const{
+    return airports_->top_flights(10);
+};
+
 
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
