@@ -37,9 +37,7 @@ Airline AirManager::getAirline(const std::string &airline_code) const {
     return airlines_.at(airline_code);
 }
 
-std::set<std::pair<std::string, int>> AirManager::top_flights(int k) const{
-    return airports_->top_flights(10);
-};
+
 
 
 void AirManager::readData() {

@@ -75,7 +75,6 @@ public:
 
     int diameter() const;
 
-    std::set<std::pair<std::string,int>,CompareDistance> top_flights(int k) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

@@ -352,14 +352,11 @@ void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &tr
     }
 }
 
-void Menu::globalInfo(){
-    std::cout<<"\nNumber of Aiports: "<<manager.size_aiports();
-    std::cout<<"\nNumber of Airlines: "<<manager.size_airlines();
-    std::cout<<"\nNumber of Flights: "<<manager.size_flights();
-    std::cout<<"\nDiameter: "<<manager.diameter();
-    std::cout<<"\nTop 10 flights: ";
-    for (auto i : manager.top_flights(10))
-        std::cout<<i.first<<i.second;
+void Menu::globalInfo() {
+    std::cout << "\nNumber of Aiports: " << manager.size_aiports();
+    std::cout << "\nNumber of Airlines: " << manager.size_airlines();
+    std::cout << "\nNumber of Flights: " << manager.size_flights();
+    std::cout << "\nDiameter: " << manager.diameter();
 }
 
 

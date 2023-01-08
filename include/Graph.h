@@ -119,8 +119,6 @@ public:
 
     int Diameter();
 
-    std::set<std::pair<std::string,int>,CompareDistance> top_flights(int k);
-
 };
 
 #endif //FEUP_AED2_GRAPH_H

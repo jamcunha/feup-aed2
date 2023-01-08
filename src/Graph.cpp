@@ -25,23 +25,7 @@ int Graph::size_Flights(){
     return count;
 }
 
-std::set<std::pair<std::string,int>,CompareDistance> Graph::top_flights(int k){
-    std::set<std::pair<std::string,int>,CompareDistance> flights;
-    for (int i=0; i<=k;i++){
-        flights.insert({"",0});
-    }
-    for (auto const &n:nodes) {
-        for (auto &p: flights) {
-            if (p.second < n.second.adj.size()) {
-                flights.insert({n.first, n.second.adj.size()});
-                break;
-            }
-        }
-        while (flights.size()>k)
-            flights.erase(flights.end());
-    }
-    return flights;
-}
+
 
 int Graph::Diameter(){
     int size=0;
