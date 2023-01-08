@@ -265,7 +265,10 @@ void Menu::inputCoordinates(bool option) const {
     }
     std::list<std::list<std::pair<Airport, std::string>>> traveled_airports;
     if(option) {
-        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
+        int dist;
+        std::cout<<"Insira o raio que pretende utilizar: ";
+        std::cin>>dist;
+        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly, dist);
     }
     else
         traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
@@ -357,6 +360,13 @@ void Menu::globalInfo() {
     std::cout << "\nNumber of Airlines: " << manager.size_airlines();
     std::cout << "\nNumber of Flights: " << manager.size_flights();
     std::cout << "\nDiameter: " << manager.diameter();
+    int k;
+    std::cout << "\n Insira o número de aeroportos que quer ver o TOP: ";
+    std::cin>>k;
+    std::cout << "\nTop "<<k<<" Aiports with most flights:\n";
+    for (auto i : manager.top_flights(k))
+        std::cout<<i.first<<"-"<<i.second<<"\n";
+    utils::clearScreen();
 }
 
 

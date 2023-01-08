@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -29,7 +30,7 @@ public:
 
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport, bool how_to_fly) const;
 
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, int dist, bool how_to_fly) const;
 
     std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end, bool how_to_fly) const;
 
@@ -75,6 +76,7 @@ public:
 
     int diameter() const;
 
+    std::multiset<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

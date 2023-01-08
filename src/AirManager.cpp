@@ -37,8 +37,9 @@ Airline AirManager::getAirline(const std::string &airline_code) const {
     return airlines_.at(airline_code);
 }
 
-
-
+std::multiset<std::pair<std::string, int>,utils::CompareDistance> AirManager::top_flights(int k) const{
+    return airports_->top_flights(k);
+};
 
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
@@ -111,10 +112,10 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirp
     return airports_->getTraveledAirportsByDistance(source_airport,target_airport);
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const{
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, int dist, bool how_to_fly) const{
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
-    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
-    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
+    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude, dist);
+    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude, dist);
     if (how_to_fly){
         bool flag = true;
         for (auto i : start_airtports){
@@ -131,7 +132,7 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
 
         return traveled;}
     bool flag = true;
-    int distance=INF;
+    double distance=INF;
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirportsByDistance(i,j);
@@ -167,7 +168,7 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const
 
         return traveled;}
     bool flag = true;
-    int distance=INF;
+    double distance=INF;
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirportsByDistance(i,j);
