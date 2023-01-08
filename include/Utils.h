@@ -37,6 +37,13 @@ namespace utils {
     double haversine(Airport &source, Airport &target);
 
     void clearScreen();
+    
+    // used in priority queue used in dijkstra algorithm
+    struct CompareDistance {
+        bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2) {
+            return n1.second>n2.second;
+        }
+    };
 }
 
 #endif //FEUP_AED2_UTILS_H

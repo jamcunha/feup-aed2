@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -76,7 +77,7 @@ public:
      * @param target_airport Target airport's code.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport,bool how_to_fly) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using local GPS coordinates as a reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -87,7 +88,7 @@ public:
      * @param end_latitude Target airport's latitude.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude,bool how_to_fly) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using both the host cities as reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -96,7 +97,7 @@ public:
      * @param end Target airport's city.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end,bool how_to_fly) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using inputted GPS coordinates as reference.
      * @details Because inputting coordinates can be too exact, this function helps the user finding the closest airports to both coordinates.
@@ -107,7 +108,13 @@ public:
      * @param end_latitude Latitude selected by the client.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude,bool how_to_fly) const;
+
+
+
+
+
+
 
     /**
      * Gets the minimum of flights needed to go from a source airport to a said target airport.
@@ -238,6 +245,16 @@ public:
      * @return List of all the airports located within the city.
      */
     std::list<std::string> findAirportByCity(const std::string &city) const;
+
+    int size_aiports() const;
+
+    int size_airlines() const;
+
+    int size_flights() const;
+
+    int diameter() const;
+
+    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

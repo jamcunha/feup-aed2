@@ -13,6 +13,7 @@
 class Menu {
 private:
     AirManager manager;
+    bool how_to_fly= true;
 
 public:
     /**
@@ -119,6 +120,8 @@ public:
      * @details This menu is used to input the current airport where the client is and the desired airport the client wants to go.
      */
     void inputAirport() const;
+
+    void globalInfo();
 };
 
 #endif //FEUP_AED2_MENU_H

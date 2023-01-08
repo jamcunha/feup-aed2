@@ -3,6 +3,7 @@
 
 #include "Airport.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -300,6 +301,17 @@ public:
      * @return Set of all the airlines included in the favourite list.
      */
     std::unordered_set<std::string> getWantedAirlines() const;
+
+    int size_Nodes();
+
+    int size_Flights();
+
+    void bfs_diameter(const std::string &airport_code);
+
+    int Diameter();
+
+    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
+
 };
 
 #endif //FEUP_AED2_GRAPH_H
