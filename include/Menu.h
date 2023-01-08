@@ -10,7 +10,6 @@
 class Menu {
 private:
     AirManager manager;
-    bool how_to_fly= true;
 
 public:
     Menu();

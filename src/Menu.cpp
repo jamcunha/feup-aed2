@@ -187,7 +187,7 @@ void Menu::inputAirport() const {
         }
     }
 
-    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target, how_to_fly);
+    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target);
     pages(traveled_airports);
 }
 
@@ -221,7 +221,7 @@ void Menu::inputCity() const {
             return;
         utils::clearScreen();
     }
-    std::list<std::list<std::pair<Airport, std::string>>> traveled_airports = manager.localCity(source, target, how_to_fly);
+    std::list<std::list<std::pair<Airport, std::string>>> traveled_airports = manager.localCity(source, target);
     pages(traveled_airports);
 }
 
@@ -261,10 +261,10 @@ void Menu::inputCoordinates(bool option) const {
     }
     std::list<std::list<std::pair<Airport, std::string>>> traveled_airports;
     if(option) {
-        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
+        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude);
     }
     else
-        traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
+        traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude);
     pages(traveled_airports);
 }
 
@@ -718,7 +718,7 @@ void Menu::settings() {
         std::cout << "| 2 - Remove wanted airline                            |\n";
         std::cout << "| 3 - Clear wanted airlines                            |\n";
         std::cout << "| 4 - List wanted airlines                             |\n";
-        std::cout << "| 5 - Nª Voos/Distância [" << (how_to_fly ? "Nª Voos]  " : "Distância]") << "                    |\n";
+        std::cout << "| 5 - Nr Flights/Distance [" << (manager.getHowToFly() ? "Nr Flights]" : "Distance]  ") << "                 |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
@@ -885,7 +885,7 @@ void Menu::settings() {
 
                 break;
             case '5':
-                how_to_fly=!how_to_fly;
+                manager.changeHowToFly();
                 break;
             default:
                 utils::clearScreen();
