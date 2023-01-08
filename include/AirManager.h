@@ -27,13 +27,13 @@ public:
 
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
-    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport, bool how_to_fly) const;
 
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const;
 
-    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end, bool how_to_fly) const;
 
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const;
 
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 

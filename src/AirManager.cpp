@@ -86,51 +86,90 @@ void AirManager::readData() {
 //     return airports_->getShortestPath(source_airport, target_airport);
 // }
 
-std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const {
-    return airports_->getTraveledAirports(source_airport, target_airport);
+std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport, bool how_to_fly) const {
+    if (how_to_fly)
+        return airports_->getTraveledAirports(source_airport, target_airport);
+    return airports_->getTraveledAirportsByDistance(source_airport,target_airport);
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const{
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const{
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
     std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
     std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
-    bool flag = true;
-    for (auto i : start_airtports){
-        for (auto j : end_airports){
-            temp = airports_->getTraveledAirports(i,j);
-            if (temp.size()<=traveled.size() || flag) {
-                traveled=temp;
-                flag=false;
+    if (how_to_fly){
+        bool flag = true;
+        for (auto i : start_airtports){
+            for (auto j : end_airports){
+                temp = airports_->getTraveledAirports(i,j);
+                if (temp.front().size()<traveled.front().size() || flag) {
+                    traveled=temp;
+                    flag=false;
+                }
+                else if (temp.front().size()==traveled.front().size())
+                    traveled.insert(traveled.end(),temp.begin(),temp.end());
             }
         }
-    }
 
-    return traveled;
-}
-
-std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const std::string &start, const std::string &end) const {
-    std::list<std::list<std::pair<Airport,std::string>>> traveled, temp;
-    std::list<std::string> start_airtports = airports_->findAirportByCity(start);
-    std::list<std::string> end_airports = airports_->findAirportByCity(end);
+        return traveled;}
     bool flag = true;
+    int distance=INF;
     for (auto i : start_airtports){
         for (auto j : end_airports){
-            temp = airports_->getTraveledAirports(i,j);
-            if (temp.front().size()<traveled.front().size() || flag) {
+            temp = airports_->getTraveledAirportsByDistance(i,j);
+            if (airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode()) < distance || flag) {
                 traveled=temp;
+                distance=airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode());
                 flag=false;
             }
-            else if (temp.front().size()==traveled.front().size())
+            else if (airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode()) == distance)
                 traveled.insert(traveled.end(),temp.begin(),temp.end());
         }
     }
     return traveled;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const {
+std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const std::string &start, const std::string &end, bool how_to_fly) const {
+    std::list<std::list<std::pair<Airport,std::string>>> traveled, temp;
+    std::list<std::string> start_airtports = airports_->findAirportByCity(start);
+    std::list<std::string> end_airports = airports_->findAirportByCity(end);
+    if (how_to_fly){
+        bool flag = true;
+        for (auto i : start_airtports){
+            for (auto j : end_airports){
+                temp = airports_->getTraveledAirports(i,j);
+                if (temp.front().size()<traveled.front().size() || flag) {
+                    traveled=temp;
+                    flag=false;
+                }
+                else if (temp.front().size()==traveled.front().size())
+                    traveled.insert(traveled.end(),temp.begin(),temp.end());
+            }
+        }
+
+        return traveled;}
+    bool flag = true;
+    int distance=INF;
+    for (auto i : start_airtports){
+        for (auto j : end_airports){
+            temp = airports_->getTraveledAirportsByDistance(i,j);
+            if (airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode()) < distance || flag) {
+                traveled=temp;
+                distance=airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode());
+                flag=false;
+            }
+            else if (airports_->getShortestPath(temp.front().front().first.getCode(),temp.front().back().first.getCode()) == distance)
+                traveled.insert(traveled.end(),temp.begin(),temp.end());
+        }
+    }
+    return traveled;
+}
+
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const {
     std::string start = airports_->findAirport(start_latitude,start_longitude);
     std::string end = airports_->findAirport(end_latitude,end_longitude);
-    return airports_->getTraveledAirports(start,end);
+    if (how_to_fly)
+        return airports_->getTraveledAirports(start,end);
+    return airports_->getTraveledAirportsByDistance(start,end);
 }
 
 int AirManager::getMinFlights(const std::string &source_airport, const std::string &target_airport) {
