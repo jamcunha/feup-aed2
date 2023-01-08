@@ -124,7 +124,10 @@ public:
      * @details This menu is used to input the current airport where the client is and the desired airport the client wants to go.
      */
     void inputAirport() const;
-
+    /**
+     * @brief Opens the menu with the global information
+     * @details This menu is used to view top flights, all airports available, all airlines, ect.
+     */
     void globalInfo();
 };
 

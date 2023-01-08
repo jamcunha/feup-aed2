@@ -35,10 +35,13 @@ namespace utils {
      * @return Distance between the airports in Kilometers.
      */
     double haversine(Airport &source, Airport &target);
-
+    /**
+     * @brief Clears the screen.
+     */
     void clearScreen();
-    
-    // used in priority queue used in dijkstra algorithm
+    /**
+     * @brief Helper function used in dijkstra algorithm.
+     */
     struct CompareDistance {
         bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2) {
             return n1.second>n2.second;
