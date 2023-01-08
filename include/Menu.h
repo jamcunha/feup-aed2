@@ -20,6 +20,8 @@ public:
 
     void airportInfo();
 
+    void airlineInfo() const;
+
     void flightsFromAirportInfo(const std::string &airport_code) const;
 
     void airlinesFromAirportInfo(const std::string &airport_code) const;

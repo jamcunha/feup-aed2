@@ -113,7 +113,7 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
 
         return traveled;}
     bool flag = true;
-    int distance=INF;
+    double distance=INF;
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirportsByDistance(i,j);
@@ -149,7 +149,7 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const
 
         return traveled;}
     bool flag = true;
-    int distance=INF;
+    double distance=INF;
     for (auto i : start_airtports){
         for (auto j : end_airports){
             temp = airports_->getTraveledAirportsByDistance(i,j);

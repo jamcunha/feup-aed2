@@ -13,6 +13,7 @@ void Menu::init() {
         std::cout << "|                                                      |\n";
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
+        std::cout << "| 3 - Get Information About An Airline                 |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 9 - Settings                                         |\n";
         std::cout << "| 0 - Exit                                             |\n";
@@ -22,7 +23,7 @@ void Menu::init() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '2' && opt >= '0' || opt == '9')
+            if(opt <= '3' && opt >= '0' || opt == '9')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -33,6 +34,9 @@ void Menu::init() {
                 break;
             case '2':
                 airportInfo();
+                break;
+            case '3':
+                airlineInfo();
                 break;
             case '9':
                 settings();
@@ -431,6 +435,58 @@ void Menu::airportInfo() {
             utils::clearScreen();
             return;
     }
+}
+
+void Menu::airlineInfo() const {
+    std::string airline_code;
+    Airline airline;
+
+    utils::clearScreen();
+    while(true) {
+        std::cout << "Please enter the airline code: ";
+        std::cin >> airline_code;
+
+        if(manager.checkIfAirlineExists(airline_code)) {
+            airline = manager.getAirline(airline_code);
+            break;
+        }
+        else
+            std::cout << "Airline doesn't exists\n\n";
+    }
+
+    utils::clearScreen();
+    std::string tmp;
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "|                    Airline Info                      |\n";
+
+    /* extract to a function to avoid code duplication */
+    tmp = "| Code: " + airline.getCode();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Name : " + airline.getName();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Call Sign : " + airline.getCallsign();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Country : " + airline.getCountry();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
 }
 
 void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
