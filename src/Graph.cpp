@@ -18,20 +18,23 @@ int Graph::size_Flights(){
     return count;
 }
 
-std::set<std::pair<std::string,int>,utils::CompareDistance> Graph::top_flights(int k){
-    std::set<std::pair<std::string,int>, utils::CompareDistance> flights;
-    for (int i=0; i<=k;i++){
-        flights.insert({"",0});
-    }
+
+std::multiset<std::pair<std::string,int>,utils::CompareDistance> Graph::top_flights(int k){
+    std::multiset<std::pair<std::string,int>, utils::CompareDistance> flights;
+    flights.insert({"",0});
     for (auto const &n:nodes) {
         for (auto &p: flights) {
+            if (flights.size()<k){
+                flights.insert({n.first, n.second.adj.size()});
+                break;
+            }
             if (p.second < n.second.adj.size()) {
                 flights.insert({n.first, n.second.adj.size()});
                 break;
             }
         }
         while (flights.size()>k)
-            flights.erase(flights.end());
+            flights.erase(std::prev(flights.end()));
     }
     return flights;
 }
@@ -246,11 +249,11 @@ std::string Graph::findAirport(double latitude, double longitude){
     return code;
 }
 
-std::list<std::string> Graph::findAirports(double latitude, double longitude){
+std::list<std::string> Graph::findAirports(double latitude, double longitude, int dist){
     std::list<std::string> airports ;
-    for (auto node: nodes) {//n
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100) {//log(n)
-            airports.push_back(node.first);//1
+    for (auto node: nodes) {
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<dist) {
+            airports.push_back(node.first);
         }
     }
     return airports;

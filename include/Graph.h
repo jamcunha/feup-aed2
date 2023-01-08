@@ -174,14 +174,15 @@ public:
      */
     std::list<std::string> findAirportByCity(const std::string &city);
     /**
-     * @brief Search the airport located in fixed GPS coordinates.
+     * @brief Search the airport located within a certain distance from fixed GPS coordinates.
      * @details Time Complexity - O(V log(n)).
      * @details V is the number of vertices/nodes.
      * @param latitude Latitude of the airport.
      * @param longitude Longitude of the airport.
+     * @param dist Distance where airports can be.
      * @return All of the airport information.
      */
-    std::list<std::string> findAirports(double latitude, double longitude);
+    std::list<std::string> findAirports(double latitude, double longitude, int dist);
     /**
      * @brief Gets the number of kilometers traveled in a straight line from a source airport to a target airport.
      * @details Time Complexity- O(|E| log(|V|)).
@@ -335,8 +336,7 @@ public:
      * @param k Number of flights to be ranked.
      * @return Set of the longest flights.
      */
-    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
-
+    std::multiset<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
 };
 
 #endif //FEUP_AED2_GRAPH_H

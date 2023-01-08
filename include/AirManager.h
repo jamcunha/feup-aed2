@@ -27,6 +27,13 @@ private:
      */
     std::unordered_set<std::string> cities_;
     /**
+     * @brief Variable used to determine all of the flights in a trip
+     * @details True means the flights will be determined by the less number of kilometers possible.
+     * @detail False means the flights will be determined by the less number of flights possible.
+     */
+    bool how_to_fly;
+
+    /**
      * @brief Reads all the data saved in the files and stores them in the correct structures.
      * @details Time Complexity - O(n^3).
      */
@@ -77,7 +84,7 @@ public:
      * @param target_airport Target airport's code.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport,bool how_to_fly) const;
+    std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using local GPS coordinates as a reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -88,7 +95,7 @@ public:
      * @param end_latitude Target airport's latitude.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude,bool how_to_fly) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using both the host cities as reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).
@@ -97,7 +104,7 @@ public:
      * @param end Target airport's city.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end,bool how_to_fly) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using inputted GPS coordinates as reference.
      * @details Because inputting coordinates can be too exact, this function helps the user finding the closest airports to both coordinates.
@@ -108,7 +115,7 @@ public:
      * @param end_latitude Latitude selected by the client.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude,bool how_to_fly) const;
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
     /**
      * Gets the minimum of flights needed to go from a source airport to a said target airport.
      * @details Time Complexity - O(|V| + |E|).
@@ -270,7 +277,19 @@ public:
      * @param k Number of flights to be ranked.
      * @return Set of the longest flights.
      */
-    std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
+    std::multiset<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
+    /**
+     * @brief Gets the variable that holds the way the flights will be determined
+     * @return True-The flights will be determined by the less number of kilometers possible.
+     * @return False-The flights will be determined by the less number of flights possible.
+     */
+    bool getHowToFly() const;
+    /**
+     * @brief Changes the variable that holds the way the flights will be determined.
+     * @details If the variable holds "True" value it changes to "False" and if it holds "False" otherwise.
+     */
+    void changeHowToFly();
+
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

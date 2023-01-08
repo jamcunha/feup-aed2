@@ -13,7 +13,8 @@ void Menu::init() {
         std::cout << "|                                                      |\n";
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
-        std::cout << "| 3 - Global Information                               |\n";
+        std::cout << "| 3 - Get Information About An Airline                 |\n";
+        std::cout << "| 4 - Global Information                               |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 9 - Settings                                         |\n";
         std::cout << "| 0 - Exit                                             |\n";
@@ -23,7 +24,7 @@ void Menu::init() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '3' && opt >= '0' || opt == '9')
+            if(opt <= '4' && opt >= '0' || opt == '9')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -36,6 +37,9 @@ void Menu::init() {
                 airportInfo();
                 break;
             case '3':
+                airlineInfo();
+                break;
+            case '4':
                 globalInfo();
                 break;
             case '9':
@@ -191,7 +195,7 @@ void Menu::inputAirport() const {
         }
     }
 
-    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target, how_to_fly);
+    std::list<std::list<std::pair<Airport,std::string>>> traveled_airports = manager.getTraveledAirports(source, target);
     pages(traveled_airports);
 }
 
@@ -225,7 +229,7 @@ void Menu::inputCity() const {
             return;
         utils::clearScreen();
     }
-    std::list<std::list<std::pair<Airport, std::string>>> traveled_airports = manager.localCity(source, target, how_to_fly);
+    std::list<std::list<std::pair<Airport, std::string>>> traveled_airports = manager.localCity(source, target);
     pages(traveled_airports);
 }
 
@@ -265,10 +269,13 @@ void Menu::inputCoordinates(bool option) const {
     }
     std::list<std::list<std::pair<Airport, std::string>>> traveled_airports;
     if(option) {
-        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
+        int dist;
+        std::cout<<"Insert desired radius: ";
+        std::cin>>dist;
+        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, dist);
     }
     else
-        traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude, how_to_fly);
+        traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude);
     pages(traveled_airports);
 }
 
@@ -352,14 +359,29 @@ void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &tr
     }
 }
 
-void Menu::globalInfo(){
-    std::cout<<"\nNumber of Aiports: "<<manager.size_aiports();
-    std::cout<<"\nNumber of Airlines: "<<manager.size_airlines();
-    std::cout<<"\nNumber of Flights: "<<manager.size_flights();
-    std::cout<<"\nDiameter: "<<manager.diameter();
-    std::cout<<"\nTop 10 flights: ";
-    for (auto i : manager.top_flights(10))
-        std::cout<<i.first<<i.second;
+void Menu::globalInfo() {
+    utils::clearScreen();
+
+    int k;
+    std::cout << "\nInsert limit of the top: ";
+    std::cin>>k;
+
+    utils::clearScreen();
+
+    std::cout << "Number of Aiports: " << manager.size_aiports();
+    std::cout << "\nNumber of Airlines: " << manager.size_airlines();
+    std::cout << "\nNumber of Flights: " << manager.size_flights();
+    std::cout << "\nDiameter: " << manager.diameter();
+    std::cout << "\n\nTop "<<k<<" Aiports with most flights:\n";
+    for (auto i : manager.top_flights(k))
+        std::cout<<i.first<<" -> "<<i.second<<"\n";
+
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
 }
 
 
@@ -446,6 +468,58 @@ void Menu::airportInfo() {
             utils::clearScreen();
             return;
     }
+}
+
+void Menu::airlineInfo() const {
+    std::string airline_code;
+    Airline airline;
+
+    utils::clearScreen();
+    while(true) {
+        std::cout << "Please enter the airline code: ";
+        std::cin >> airline_code;
+
+        if(manager.checkIfAirlineExists(airline_code)) {
+            airline = manager.getAirline(airline_code);
+            break;
+        }
+        else
+            std::cout << "Airline doesn't exists\n\n";
+    }
+
+    utils::clearScreen();
+    std::string tmp;
+
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "|                    Airline Info                      |\n";
+
+    /* extract to a function to avoid code duplication */
+    tmp = "| Code: " + airline.getCode();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Name : " + airline.getName();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Call Sign : " + airline.getCallsign();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+
+    tmp = "| Country : " + airline.getCountry();
+    std::cout << tmp;
+    for(int i = 0; i < 55 - tmp.length(); i++) std::cout << " ";
+    std::cout << "|\n";
+    std::cout << "--------------------------------------------------------\n";
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
 }
 
 void Menu::flightsFromAirportInfo(const std::string &airport_code) const {
@@ -733,7 +807,7 @@ void Menu::settings() {
         std::cout << "| 2 - Remove wanted airline                            |\n";
         std::cout << "| 3 - Clear wanted airlines                            |\n";
         std::cout << "| 4 - List wanted airlines                             |\n";
-        std::cout << "| 5 - Nª Voos/Distância [" << (how_to_fly ? "Nª Voos]  " : "Distância]") << "                    |\n";
+        std::cout << "| 5 - Nr Flights/Distance [" << (manager.getHowToFly() ? "Nr Flights]" : "Distance]  ") << "                 |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 0 - Exit                                             |\n";
         std::cout << "--------------------------------------------------------\n";
@@ -900,7 +974,7 @@ void Menu::settings() {
 
                 break;
             case '5':
-                how_to_fly=!how_to_fly;
+                manager.changeHowToFly();
                 break;
             default:
                 utils::clearScreen();

@@ -6,6 +6,7 @@
 
 AirManager::AirManager() {
     this->airports_ = new Graph(true);
+    this->how_to_fly = true;
     readData();
 }
 
@@ -37,10 +38,9 @@ Airline AirManager::getAirline(const std::string &airline_code) const {
     return airlines_.at(airline_code);
 }
 
-std::set<std::pair<std::string, int>,utils::CompareDistance> AirManager::top_flights(int k) const{
-    return airports_->top_flights(10);
+std::multiset<std::pair<std::string, int>,utils::CompareDistance> AirManager::top_flights(int k) const{
+    return airports_->top_flights(k);
 };
-
 
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
@@ -107,16 +107,16 @@ void AirManager::readData() {
 //     return airports_->getShortestPath(source_airport, target_airport);
 //}
 
-std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport, bool how_to_fly) const {
+std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const {
     if (how_to_fly)
         return airports_->getTraveledAirports(source_airport, target_airport);
     return airports_->getTraveledAirportsByDistance(source_airport,target_airport);
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const{
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, int dist) const{
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
-    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
-    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
+    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude, dist);
+    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude, dist);
     if (how_to_fly){
         bool flag = true;
         for (auto i : start_airtports){
@@ -149,7 +149,7 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
     return traveled;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const std::string &start, const std::string &end, bool how_to_fly) const {
+std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const std::string &start, const std::string &end) const {
     std::list<std::list<std::pair<Airport,std::string>>> traveled, temp;
     std::list<std::string> start_airtports = airports_->findAirportByCity(start);
     std::list<std::string> end_airports = airports_->findAirportByCity(end);
@@ -185,7 +185,7 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const
     return traveled;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude, bool how_to_fly) const {
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const {
     std::string start = airports_->findAirport(start_latitude,start_longitude);
     std::string end = airports_->findAirport(end_latitude,end_longitude);
     if (how_to_fly)
@@ -271,5 +271,13 @@ void AirManager::clearWantedAirline() {
 
 std::unordered_set<std::string> AirManager::getWantedAirlines() const {
     return airports_->getWantedAirlines();
+}
+
+bool AirManager::getHowToFly() const {
+    return how_to_fly;
+}
+
+void AirManager::changeHowToFly() {
+    how_to_fly = !how_to_fly;
 }
 

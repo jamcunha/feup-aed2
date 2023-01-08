@@ -13,7 +13,6 @@
 class Menu {
 private:
     AirManager manager;
-    bool how_to_fly= true;
 
 public:
     /**
@@ -35,6 +34,11 @@ public:
      * @details This menu is used to give access to all information about a airport such as name,location,flights available,etc.
      */
     void airportInfo();
+    /**
+     * @brief Initializes the airline info menu.
+     * @details This menu is used to give all information about a airline such as name,call-sign,ect.
+     */
+    void airlineInfo() const;
     /**
      * @brief Prints all airports reachable in all flights available in a single airport.
      * @details Time Complexity- O(|E| log(|V|)).
