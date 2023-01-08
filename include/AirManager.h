@@ -93,9 +93,10 @@ public:
      * @param start_latitude Source airport's latitude.
      * @param end_longitude Target airport's longitude.
      * @param end_latitude Target airport's latitude.
+     * @param dist Max distance from this coordinates to search an airport for.
      * @return List of all airports the client can travel through in a trip.
      */
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude,int dist) const;
     /**
      * @brief Gets a list of every traveled airport in a trip from a source airport to a target airport using both the host cities as reference.
      * @details Time Complexity - O(n^2 (|V|+|E|).

@@ -32,12 +32,15 @@ public:
     /**
      * @brief Create a new Airline.
      * @details Constructor of the Airline class.
+     */
+    Airline() {};
+    /**
+     * @brief Overloading of the class constructor.
      * @param code Internal code(IBE,SWE,RYR,ect.)
      * @param name Name of the new Airline
      * @param callsign Call-sign of the new Airline.
      * @param country Country where the new Ailrine was funded.
      */
-    Airline() {};
     Airline(std::string code, std::string name, std::string callsign, std::string country);
     //"Getter"
     /**
