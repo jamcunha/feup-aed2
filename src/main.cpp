@@ -1,7 +1,9 @@
 #include <iostream>
-#include "../include/AirManager.h"
+#include "../include/Menu.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Menu menu = Menu();
+    menu.init();
+
     return 0;
 }

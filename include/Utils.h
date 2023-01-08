@@ -6,7 +6,9 @@
 #define FEUP_AED2_UTILS_H
 
 #include "Airport.h"
+
 #include <cmath>
+#include <iostream>
 
 namespace utils {
     /**
@@ -24,6 +26,8 @@ namespace utils {
     double haversine(double lat1, double lat2, double long1, double long2);
 
     double haversine(Airport &source, Airport &target);
+
+    void clearScreen();
 }
 
 #endif //FEUP_AED2_UTILS_H
