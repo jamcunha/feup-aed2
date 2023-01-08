@@ -1,20 +1,85 @@
 #include "../include/Graph.h"
-#include "../include/Utils.h"
 
 #include <iostream>
 #include <queue>
 
 Graph::Graph(bool dir): has_dir(dir) {}
 
-// used in priority queue used in dijkstra algorithm
-struct CompareDistance {
-    bool operator()(std::pair<std::string, double> const &n1, std::pair<std::string, double> const &n2) {
-        return n1.second>n2.second;
+
+int Graph::size_Nodes(){
+    return nodes.size();
+}
+
+int Graph::size_Flights(){
+    int count;
+    for (auto const &n : nodes){
+        count+=n.second.adj.size();
     }
-};
+    return count;
+}
+
+
+std::multiset<std::pair<std::string,int>,utils::CompareDistance> Graph::top_flights(int k){
+    std::multiset<std::pair<std::string,int>, utils::CompareDistance> flights;
+    flights.insert({"",0});
+    for (auto const &n:nodes) {
+        for (auto &p: flights) {
+            if (flights.size()<k){
+                flights.insert({n.first, n.second.adj.size()});
+                break;
+            }
+            if (p.second < n.second.adj.size()) {
+                flights.insert({n.first, n.second.adj.size()});
+                break;
+            }
+        }
+        while (flights.size()>k)
+            flights.erase(std::prev(flights.end()));
+    }
+    return flights;
+}
+
+int Graph::Diameter(){
+    int size=0;
+    for (auto const &n:nodes){
+        bfs_diameter(n.first);
+        for (auto &i:nodes){
+            if (i.second.visited){
+                i.second.visited = false;
+                if (i.second.travel_from_src.front().size()-1>size)
+                    size=i.second.travel_from_src.front().size()-1;
+            }
+        }
+    }
+    return size;
+}
+void Graph::bfs_diameter(const std::string &airport_code) {
+    setUnvisited();
+
+    std::queue<std::string> q; // queue of unvisited nodes
+    q.push(airport_code);
+    nodes[airport_code].visited = true;
+    nodes[airport_code].travel_from_src.push_back({ { nodes[airport_code].airport, "" } });
+    while(!q.empty()) {
+        std::string u = q.front(); q.pop();
+
+        Node& node = nodes[u];
+        // std::cout << node.airport.getCode() << '\n';
+
+        for(const auto &e: node.adj) {
+            std::string w = e.dest;
+            if(!nodes[w].visited) {
+                q.push(w);
+                nodes[w].visited = true;
+                nodes[w].travel_from_src=node.travel_from_src;
+                nodes[w].travel_from_src.front().push_back({nodes[w].airport, e.airline});
+            }
+        }
+    }
+}
 
 void Graph::shortestPath(const std::string &airport_code) {
-    std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, CompareDistance> q;
+    std::priority_queue<std::pair<std::string, double>,std::vector<std::pair<std::string, double>>, utils::CompareDistance> q;
 
     setUnvisited();
     nodes[airport_code].src_distance = 0;
@@ -184,10 +249,10 @@ std::string Graph::findAirport(double latitude, double longitude){
     return code;
 }
 
-std::list<std::string> Graph::findAirports(double latitude, double longitude){
+std::list<std::string> Graph::findAirports(double latitude, double longitude, int dist){
     std::list<std::string> airports ;
     for (auto node: nodes) {
-        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<100) {
+        if (utils::haversine(latitude,node.second.airport.getLatitude(),longitude,node.second.airport.getLongitude())<dist) {
             airports.push_back(node.first);
         }
     }

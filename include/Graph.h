@@ -3,6 +3,7 @@
 
 #include "Airport.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -68,7 +69,7 @@ public:
 
     std::list<std::string> findAirportByCity(const std::string &city);
 
-    std::list<std::string> findAirports(double latitude, double longitude);
+    std::list<std::string> findAirports(double latitude, double longitude, int dist);
 
     // Get number of kilometers traveled in a straight line from a source airport to a target airport
     double getShortestPath(const std::string &source_airport, const std::string &target_airport);
@@ -110,6 +111,17 @@ public:
     void clearWantedAirline();
 
     std::unordered_set<std::string> getWantedAirlines() const;
+
+    int size_Nodes();
+
+    int size_Flights();
+
+    void bfs_diameter(const std::string &airport_code);
+
+    int Diameter();
+
+    std::multiset<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
+
 };
 
 #endif //FEUP_AED2_GRAPH_H

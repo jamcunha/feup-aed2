@@ -3,6 +3,7 @@
 
 #include "Graph.h"
 #include "Airline.h"
+#include "Utils.h"
 
 #include <list>
 #include <set>
@@ -30,7 +31,7 @@ public:
 
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
 
-    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, int dist) const;
 
     std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
 
@@ -67,6 +68,16 @@ public:
     std::unordered_set<std::string> getWantedAirlines() const;
 
     std::list<std::string> findAirportByCity(const std::string &city) const;
+
+    int size_aiports() const;
+
+    int size_airlines() const;
+
+    int size_flights() const;
+
+    int diameter() const;
+
+    std::multiset<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
 
     bool getHowToFly() const;
     void changeHowToFly();

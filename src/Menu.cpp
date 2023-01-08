@@ -14,6 +14,7 @@ void Menu::init() {
         std::cout << "| 1 - Flight                                           |\n";
         std::cout << "| 2 - Get Information About An Airport                 |\n";
         std::cout << "| 3 - Get Information About An Airline                 |\n";
+        std::cout << "| 4 - Global Information                               |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 9 - Settings                                         |\n";
         std::cout << "| 0 - Exit                                             |\n";
@@ -23,7 +24,7 @@ void Menu::init() {
         while(true) {
             std::cout << "\nOption: ";
             std::cin >> opt;
-            if(opt <= '3' && opt >= '0' || opt == '9')
+            if(opt <= '4' && opt >= '0' || opt == '9')
                 break;
             std::cout << "Not a valid option, please choose another.\n";
         }
@@ -37,6 +38,9 @@ void Menu::init() {
                 break;
             case '3':
                 airlineInfo();
+                break;
+            case '4':
+                globalInfo();
                 break;
             case '9':
                 settings();
@@ -265,7 +269,10 @@ void Menu::inputCoordinates(bool option) const {
     }
     std::list<std::list<std::pair<Airport, std::string>>> traveled_airports;
     if(option) {
-        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude);
+        int dist;
+        std::cout<<"Insert desired radius: ";
+        std::cin>>dist;
+        traveled_airports = manager.localCoordinates(source_latitude,source_longitude,target_latitude,target_longitude, dist);
     }
     else
         traveled_airports = manager.localCoordinatesClosest(source_latitude,source_longitude,target_latitude,target_longitude);
@@ -351,6 +358,32 @@ void Menu::pages(const std::list<std::list<std::pair<Airport, std::string>>> &tr
         }
     }
 }
+
+void Menu::globalInfo() {
+    utils::clearScreen();
+
+    int k;
+    std::cout << "\nInsert limit of the top: ";
+    std::cin>>k;
+
+    utils::clearScreen();
+
+    std::cout << "Number of Aiports: " << manager.size_aiports();
+    std::cout << "\nNumber of Airlines: " << manager.size_airlines();
+    std::cout << "\nNumber of Flights: " << manager.size_flights();
+    std::cout << "\nDiameter: " << manager.diameter();
+    std::cout << "\n\nTop "<<k<<" Aiports with most flights:\n";
+    for (auto i : manager.top_flights(k))
+        std::cout<<i.first<<" -> "<<i.second<<"\n";
+
+    std::cout << "\nPress <Enter> to go to main menu...";
+
+    /* wait for enter to be pressed */
+    std::cin.ignore(); // ignore characters in buffer
+    while(std::cin.get() != '\n')
+        continue;
+}
+
 
 void Menu::airportInfo() {
     std::string airport_code;

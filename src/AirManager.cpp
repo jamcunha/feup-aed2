@@ -14,6 +14,22 @@ AirManager::~AirManager() {
     delete airports_;
 }
 
+int AirManager::size_aiports() const{
+    return airports_->size_Nodes();
+}
+
+int AirManager::size_airlines() const{
+    return airlines_.size();
+}
+
+int AirManager::size_flights() const{
+    return airports_->size_Flights();
+}
+
+int AirManager::diameter() const{
+    return airports_->Diameter();
+}
+
 Airport AirManager::getAirport(const std::string &airport_code) const {
     return airports_->getAirport(airport_code);
 }
@@ -21,6 +37,10 @@ Airport AirManager::getAirport(const std::string &airport_code) const {
 Airline AirManager::getAirline(const std::string &airline_code) const {
     return airlines_.at(airline_code);
 }
+
+std::multiset<std::pair<std::string, int>,utils::CompareDistance> AirManager::top_flights(int k) const{
+    return airports_->top_flights(k);
+};
 
 void AirManager::readData() {
     std::ifstream airlines_input("../data/airlines.csv");
@@ -93,10 +113,10 @@ std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirp
     return airports_->getTraveledAirportsByDistance(source_airport,target_airport);
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const{
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude, int dist) const{
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
-    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
-    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
+    std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude, dist);
+    std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude, dist);
     if (how_to_fly){
         bool flag = true;
         for (auto i : start_airtports){

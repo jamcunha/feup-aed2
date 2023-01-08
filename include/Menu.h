@@ -47,6 +47,8 @@ public:
     void inputCoordinates(bool option) const;
 
     void inputAirport() const;
+
+    void globalInfo();
 };
 
 #endif //FEUP_AED2_MENU_H
