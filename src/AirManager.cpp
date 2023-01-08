@@ -84,7 +84,7 @@ void AirManager::readData() {
 
 // double AirManager::getDistance(const std::string &source_airport, const std::string &target_airport) {
 //     return airports_->getShortestPath(source_airport, target_airport);
-// }
+//}
 
 std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const {
     return airports_->getTraveledAirports(source_airport, target_airport);

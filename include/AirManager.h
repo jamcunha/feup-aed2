@@ -45,8 +45,19 @@ public:
      * @details Deletion of the current airports and flights Graph.
      */
     ~AirManager();
+    /**
+     * @brief Gets the Airport class.
+     * @details Time Complexity - O(1).
+     * @param airport_code Airport's code.
+     * @return All of the airport information.
+     */
     Airport getAirport(const std::string &airport_code) const;
-    
+    /**
+     * @brief Gets the Airline class.
+     * @details Time Complexity - O(1).
+     * @param airport_code Airport's code.
+     * @return All of the airline information.
+     */
     Airline getAirline(const std::string &airline_code) const;
     /**
      * @brief Gets the distance in kilometers between 2 airports.
@@ -123,21 +134,47 @@ public:
      */
     std::list<Airline> getAirlinesFromAirport(const std::string &airport_code) const;
     /**
+     * @brief Gets all airports that can be reached from a source airport in a fixed number of flights.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param source_airport Source airport's code.
+     * @param k Number of flights.
+     * @return List of airports reachable within a "k" number of flights.
+     */
+    std::list<Airport> getAirportsReached(const std::string &source_airport, int k);
+     /**
+     * @brief Gets all cities that can be reached from a source airport in a fixed number of flights.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param source_airport Source airport's code.
+     * @param k Number of flights.
+     * @return List of cities reachable within a "k" number of flights.
+     */
+    std::set<std::string> getCitiesReached(const std::string &source_airport, int k);
+     /**
+     * @brief Gets all countries that can be reached from a source airport in a fixed number of flights.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param source_airport Source airport's code.
+     * @param k Number of flights.
+     * @return List of countries reachable within a "k" number of flights.
+     */
+    std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
+    /**
+     * @brief Gets all airports that can be reached with 1 flight from a source airport.
+     * @details Time Complexity- O(|E| log(|V|)).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param airport_code Airport's code.
+     * @return List of airports reachable within 1 flight.
+     */
+    std::set<std::string> getArrivalAirport(const std::string &airport_code) const;
+    /**
      * @brief Gets all cities that can be reached with 1 flight from a source airport.
      * @details Time Complexity- O(|E| log(|V|)).
      * @details V is the number of vertices/nodes and E is the number of edges/links.
      * @param airport_code Airport's code.
      * @return List of cities reachable within 1 flight.
      */
-    std::list<Airport> getAirportsReached(const std::string &source_airport, int k);
-
-    std::set<std::string> getCitiesReached(const std::string &source_airport, int k);
-
-    std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
-
-    std::set<std::string> getArrivalAirport(const std::string &airport_code) const;
-
-
     std::set<std::string> getArrivalCities(const std::string &airport_code) const;
     /**
      * @brief Gets all countries that can be reached with 1 flight from a source airport.
@@ -147,19 +184,59 @@ public:
      * @return List of countries reachable within 1 flight.
      */
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
-
+    /**
+     * @brief Checks if airport exists in nodes hash table.
+     * @details Time Complexity- O(V).
+     * @details V is the number of vertices/nodes.
+     * @param airport_code Airport's code.
+     * @return True-If the airport exists.
+     * @return False-If the airport doesn't exist.
+     */
     bool checkIfAirportExists(const std::string &airport_code) const;
-
+    /**
+     * @brief Checks if airline exists in nodes hash table.
+     * @details Time Complexity- O(V).
+     * @details V is the number of vertices/nodes.
+     * @param airport_code Airline's code.
+     * @return True-If the airline exists.
+     * @return False-If the airline doesn't exist.
+     */
     bool checkIfAirlineExists(const std::string &airline_code) const;
-
+    /**
+     * @brief Adds a airline to the favourite airlines list.
+     * @details Time Complexity- O(log(n)).
+     * @details V is the number of vertices/nodes.
+     * @param airline_code Airline's code.
+     * @return True-If the airline was successfully added.
+     * @return False-If the airline was already added or airline doesn't exist in the airlines dataset.
+     */
     bool addWantedAirline(const std::string &airline_code);
-
+    /**
+     * @brief Removes the airline from the favourite airlines list.
+     * @details Time Complexity- O(n).
+     * @param airline_code Airline's code.
+     * @return True-If it was successfully removed.
+     * @return True-If the airline selected was not in the favourites list or airline doesn't exist in the airlines dataset.
+     */
     bool removeWantedAirline(const std::string &airline_code);
-
+    /**
+     * @brief Clears the favourite airlines list.
+     * @details Time Complexity- O(n).
+     */
     void clearWantedAirline();
-
+    /**
+     * @brief Gets the full list of favoured airlines.
+     * @details Time Complexity - O(1).
+     * @return Set of all the airlines included in the favourite list.
+     */
     std::unordered_set<std::string> getWantedAirlines() const;
-
+    /**
+     * @brief Search all the airports located in a city.
+     * @details Time Complexity - O(V).
+     * @details V is the number of vertices/nodes.
+     * @param city City where the airports are located.
+     * @return List of all the airports located within the city.
+     */
     std::list<std::string> findAirportByCity(const std::string &city) const;
 };
 

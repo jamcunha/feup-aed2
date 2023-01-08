@@ -52,8 +52,8 @@ void Menu::inputFlights() const {
         std::cout << "|                                                      |\n";
         std::cout << "| 1 - Airport Code                                     |\n";
         std::cout << "| 2 - City                                             |\n";
-        std::cout << "| 3 - Coordenates                                      |\n";
-        std::cout << "| 4 - Coordenates (closest airport)                    |\n";
+        std::cout << "| 3 - Coordinates                                      |\n";
+        std::cout << "| 4 - Coordinates (closest airport)                    |\n";
         std::cout << "|                                                      |\n";
         std::cout << "| 0 - Return to Main Menu                              |\n";
         std::cout << "--------------------------------------------------------\n";

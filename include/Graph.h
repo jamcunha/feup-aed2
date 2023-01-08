@@ -241,8 +241,13 @@ public:
      * @return List of countries reachable within a "k" number of flights.
      */
     std::set<std::string> getCountriesReached(const std::string &source_airport, int k);
-
-    // Get airports that can be reached with 1 flight from a source airport
+    /**
+     * @brief Gets all airports that can be reached with 1 flight from a source airport.
+     * @details Time Complexity- O(|E| log(|V|)).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param airport_code Airport's code.
+     * @return List of airports reachable within 1 flight.
+     */
     std::set<std::string> getArrivalAirports(const std::string &airport_code) const;
     /**
      * @brief Gets all cities that can be reached with 1 flight from a source airport.
@@ -260,16 +265,40 @@ public:
      * @return List of countries reachable within 1 flight.
      */
     std::set<std::string> getArrivalCountries(const std::string &airport_code) const;
-
-    // Check if airport exists in nodes hash table
+    /**
+     * @brief Checks if airport exists in nodes hash table.
+     * @details Time Complexity- O(V).
+     * @details V is the number of vertices/nodes.
+     * @param airport_code Airport's code.
+     * @return True-If the airport exists.
+     * @return False-If the airport doesn't exist.
+     */
     bool checkIfAirportExists(const std::string &airport_code) const;
-
+    /**
+     * @brief Adds a airline to the favourite airlines list.
+     * @details Time Complexity- O(log(n)).
+     * @details V is the number of vertices/nodes.
+     * @param airline_code Airline's code.
+     */
     void addWantedAirline(const std::string &airline_code);
-
+    /**
+     * @brief Removes the airline from the favourite airlines list.
+     * @details Time Complexity- O(n).
+     * @param airline_code Airline's code.
+     * @return True-If it was successfully removed.
+     * @return True-If the airline selected was not in the favourites list.
+     */
     bool removeWantedAirline(const std::string &airline_code);
-
+    /**
+     * @brief Clears the favourite airlines list.
+     * @details Time Complexity- O(n).
+     */
     void clearWantedAirline();
-
+    /**
+     * @brief Gets the full list of favoured airlines.
+     * @details Time Complexity - O(1).
+     * @return Set of all the airlines included in the favourite list.
+     */
     std::unordered_set<std::string> getWantedAirlines() const;
 };
 
