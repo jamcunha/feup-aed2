@@ -16,7 +16,7 @@ public:
 
     void init();
 
-    void inputAirports() const;
+    void inputFlights() const;
 
     void airportInfo();
 
@@ -37,6 +37,14 @@ public:
     void reachableCountriesInFlights(const std::string &airport_code, int nr_flights);
 
     void settings();
+
+    void inputCity() const;
+
+    void pages(const std::list<std::list<std::pair<Airport, std::string>>> &traveled_airports) const;
+
+    void inputCoordinates(bool option) const;
+
+    void inputAirport() const;
 };
 
 #endif //FEUP_AED2_MENU_H

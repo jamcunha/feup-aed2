@@ -28,12 +28,12 @@ public:
     double getDistance(const std::string &source_airport, const std::string &target_airport);
 
     std::list<std::list<std::pair<Airport,std::string>>> getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const;
-    
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
 
-    std::list<std::list<std::pair<Airport, std::string>>> localCity(std::string start, std::string end);
+    std::list<std::list<std::pair<Airport,std::string>>> localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
 
-    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude);
+    std::list<std::list<std::pair<Airport, std::string>>> localCity(const std::string &start, const std::string &end) const;
+
+    std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const;
 
     int getMinFlights(const std::string &source_airport, const std::string &target_airport);
 
@@ -64,6 +64,8 @@ public:
     void clearWantedAirline();
 
     std::unordered_set<std::string> getWantedAirlines() const;
+
+    std::list<std::string> findAirportByCity(const std::string &city) const;
 };
 
 #endif //FEUP_AED2_AIRMANAGER_H

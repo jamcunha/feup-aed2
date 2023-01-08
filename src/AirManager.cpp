@@ -82,18 +82,15 @@ void AirManager::readData() {
     }
 }
 
-/*
-double AirManager::getDistance(const std::string &source_airport, const std::string &target_airport) {
-    return airports_->getShortestPath(source_airport, target_airport);
-}*/
+// double AirManager::getDistance(const std::string &source_airport, const std::string &target_airport) {
+//     return airports_->getShortestPath(source_airport, target_airport);
+// }
 
 std::list<std::list<std::pair<Airport,std::string>>> AirManager::getTraveledAirports(const std::string &source_airport, const std::string &target_airport) const {
     return airports_->getTraveledAirports(source_airport, target_airport);
-
-
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_longitude, double start_latitude, double end_longitude, double end_latitude){
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinates(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const{
     std::list<std::list<std::pair<Airport,std::string>>> traveled,temp;
     std::list<std::string> start_airtports = airports_->findAirports(start_latitude,start_longitude);
     std::list<std::string> end_airports = airports_->findAirports(end_latitude,end_longitude);
@@ -111,7 +108,7 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinat
     return traveled;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCity(std::string start, std::string end){
+std::list<std::list<std::pair<Airport,std::string>>> AirManager::localCity(const std::string &start, const std::string &end) const {
     std::list<std::list<std::pair<Airport,std::string>>> traveled, temp;
     std::list<std::string> start_airtports = airports_->findAirportByCity(start);
     std::list<std::string> end_airports = airports_->findAirportByCity(end);
@@ -126,12 +123,11 @@ std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCity(std:
             else if (temp.front().size()==traveled.front().size())
                 traveled.insert(traveled.end(),temp.begin(),temp.end());
         }
-
     }
     return traveled;
 }
 
-std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_longitude, double start_latitude, double end_longitude, double end_latitude) {
+std::list<std::list<std::pair<Airport,std::string>>>  AirManager::localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude) const {
     std::string start = airports_->findAirport(start_latitude,start_longitude);
     std::string end = airports_->findAirport(end_latitude,end_longitude);
     return airports_->getTraveledAirports(start,end);
@@ -181,6 +177,10 @@ std::set<std::string> AirManager::getArrivalCountries(const std::string &airport
 
 bool AirManager::checkIfAirportExists(const std::string &airport_code) const {
     return airports_->checkIfAirportExists(airport_code);
+}
+
+std::list<std::string> AirManager::findAirportByCity(const std::string &city) const{
+    return airports_->findAirportByCity(city);
 }
 
 bool AirManager::checkIfAirlineExists(const std::string &airline_code) const {
