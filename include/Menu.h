@@ -10,7 +10,6 @@
 class Menu {
 private:
     AirManager manager;
-    bool how_to_fly= true;
 
 public:
     Menu();
@@ -20,6 +19,8 @@ public:
     void inputFlights() const;
 
     void airportInfo();
+
+    void airlineInfo() const;
 
     void flightsFromAirportInfo(const std::string &airport_code) const;
 
