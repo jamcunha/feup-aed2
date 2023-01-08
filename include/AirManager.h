@@ -109,13 +109,6 @@ public:
      * @return List of all airports the client can travel through in a trip.
      */
     std::list<std::list<std::pair<Airport, std::string>>> localCoordinatesClosest(double start_latitude, double start_longitude, double end_latitude, double end_longitude,bool how_to_fly) const;
-
-
-
-
-
-
-
     /**
      * Gets the minimum of flights needed to go from a source airport to a said target airport.
      * @details Time Complexity - O(|V| + |E|).
@@ -245,15 +238,38 @@ public:
      * @return List of all the airports located within the city.
      */
     std::list<std::string> findAirportByCity(const std::string &city) const;
-
+    /**
+     * @brief Gives the size of the Graph.
+     * @details The number of nodes is equal to the number of airports.
+     * @details Time Complexity- O(1).
+     * @return Number of airports.
+     */
     int size_aiports() const;
-
+    /**
+     * @brief Gets the total number of airlines in the dataset
+     * @details Time Complexity- O(1).
+     * @return Number of airlines.
+     */
     int size_airlines() const;
-
+    /**
+     * @brief Gives the size of the Graph edges.
+     * @details The number of edges is equal to the number of flights.
+     * @details Time Complexity- O(V).
+     * @return Number of flights.
+     */
     int size_flights() const;
-
+    /**
+     * @brief Gets the diameter from every flight.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @return Diameter.
+     */
     int diameter() const;
-
+    /**
+     * Gets de top "k" of flights by distance traveled.
+     * @param k Number of flights to be ranked.
+     * @return Set of the longest flights.
+     */
     std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k) const;
 };
 

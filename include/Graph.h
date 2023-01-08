@@ -301,15 +301,40 @@ public:
      * @return Set of all the airlines included in the favourite list.
      */
     std::unordered_set<std::string> getWantedAirlines() const;
-
+    /**
+     * @brief Gives the size of the Graph nodes.
+     * @details The number of nodes is equal to the number of airports.
+     * @details Time Complexity- O(1).
+     * @return Total number of nodes in the Graph.
+     */
     int size_Nodes();
-
+    /**
+     * @brief Gives the size of the Graph edges.
+     * @details The number of edges is equal to the number of flights.
+     * @details Time Complexity- O(V).
+     * @details V is the number of vertices/nodes.
+     * @return Total number of edges in the Graph.
+     */
     int size_Flights();
-
+    /**
+     * @brief Function used to help calculate the diameter of the graph.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @param airport_code Airport code to be searched.
+     */
     void bfs_diameter(const std::string &airport_code);
-
+    /**
+     * @brief Gets the diameter from every flight.
+     * @details Time Complexity - O(|V| + |E|).
+     * @details V is the number of vertices/nodes and E is the number of edges/links.
+     * @return Diameter.
+     */
     int Diameter();
-
+    /**
+     * Gets de top "k" of flights by distance traveled.
+     * @param k Number of flights to be ranked.
+     * @return Set of the longest flights.
+     */
     std::set<std::pair<std::string,int>,utils::CompareDistance> top_flights(int k);
 
 };
