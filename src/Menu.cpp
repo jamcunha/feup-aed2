@@ -366,6 +366,8 @@ void Menu::globalInfo() {
     std::cout << "\nInsert limit of the top: ";
     std::cin>>k;
 
+    utils::clearScreen();
+
     std::cout << "Number of Aiports: " << manager.size_aiports();
     std::cout << "\nNumber of Airlines: " << manager.size_airlines();
     std::cout << "\nNumber of Flights: " << manager.size_flights();
